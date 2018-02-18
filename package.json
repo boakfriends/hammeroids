@@ -1,0 +1,26 @@
+{
+  "name": "hammeroids",
+  "version": "1.0.0",
+  "description": "Just another Multiplayer browser game",
+  "main": "App.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsnprtr/hammeroids.git"
+  },
+  "keywords": [
+    "game",
+    "multiplayer"
+  ],
+  "author": "Jason Porter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsnprtr/hammeroids/issues"
+  },
+  "devDependencies" : {
+    "jasmine" : "3.0.0"
+  },
+  "homepage": "https://github.com/jsnprtr/hammeroids#readme"
+}
