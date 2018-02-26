@@ -1,12 +1,7 @@
-var App = function(canvasElement){
-    var app = this;
-    app.update = function(){
-      alert('Test update');
-    };
-  (function(){
-  })();
-};
 window.onload = function(){
-  var app = new App(document.getElementById('canvas'));
-  app.update();
+  var game = new Game(document.getElementById('canvas')),
+    fps = 5;
+  window.addEventListener('keydown', game.keyDown, false);
+  setInterval(game.update, 1000/fps);
+
 };
