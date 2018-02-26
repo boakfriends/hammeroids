@@ -41,7 +41,6 @@ var Game = function(canvasElement){
     for(var i = 1; i < shipCoords.length; i++){
       var x = START_COORDS_X + shipCoords[i][0];
       var y = START_COORDS_Y + shipCoords[i][1];
-      console.log('coords for point' + i + ' are: ' + x + ', ' + y);
       context.lineTo(x, y);
     }
     context.closePath();
