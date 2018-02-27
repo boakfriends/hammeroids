@@ -4,7 +4,10 @@ var Game = function(canvasElement){
     GAME_HEIGHT = 200,
     SHIP_LINE_WIDTH = 2,
     START_COORDS_X = GAME_WIDTH / 2,
-    START_COORDS_Y = GAME_HEIGHT / 2;
+    START_COORDS_Y = GAME_HEIGHT / 2,
+    redValue = 255,
+    greenValue = 255,
+    blueValue = 255;
   
   game.update = function(){
     updateState();
@@ -34,7 +37,7 @@ var Game = function(canvasElement){
       [-7, 8]
     ];
     
-    context.strokeStyle = 'rgb(255,255,255)';
+    context.strokeStyle = 'rgb(' + redValue + ',' + greenValue + ',' + blueValue + ')';
     context.lineWidth = SHIP_LINE_WIDTH;
     context.beginPath();
     context.moveTo(START_COORDS_X + shipCoords[0][0],START_COORDS_Y + shipCoords[0][1]);
@@ -47,9 +50,12 @@ var Game = function(canvasElement){
     context.stroke();
   }
 
-  function keyDown(e){
+  game.keyDown = function(e){
     if(e.keyCode == 38){
-      // Key up
+      // Key up      
+      redValue = Math.round(Math.random() * 255);
+      greenValue = Math.round(Math.random() * 255);
+      blueValue = Math.round(Math.random() * 255);
     }
 
     if(e.keyCode == 40){
@@ -63,7 +69,7 @@ var Game = function(canvasElement){
     if(e.keyCode == 39){
       // Arrow right
     }
-  }
+  };
 
   function getContext(){
     return canvasElement.getContext("2d");
@@ -77,6 +83,7 @@ var Game = function(canvasElement){
   initialise();
 
   return {
-    update: game.update
+    update: game.update,
+    keyDown: game.keyDown
   };
 };
