@@ -2,10 +2,7 @@ var Game = function(canvasElement){
   var game = this,
     gameState = new GameState(),
     GAME_WIDTH = 200,
-    GAME_HEIGHT = 200,
-    SHIP_LINE_WIDTH = 2,
-    START_COORDS_X = GAME_WIDTH / 2,
-    START_COORDS_Y = GAME_HEIGHT / 2;
+    GAME_HEIGHT = 200;
   
   game.update = function(){
     updateState();
@@ -13,63 +10,45 @@ var Game = function(canvasElement){
   };
 
   function updateState(){
-    
+    gameState.update();
   }
 
   function draw(){
     context = getContext();
     drawRect(context);
-    drawShip(context);
+    drawObjects(context);
   }
 
   function drawRect(context){
     context.fillStyle = "rgb(0,0,0)";
-    context.fillRect(0, 0, 200, 200);
+    context.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
   }
 
-  function drawShip(context){
-    var shipCoords = [
-      [0, -10],
-      [7, 8],
-      [0, 2],
-      [-7, 8]
-    ];
-    
-    context.strokeStyle = gameState.getRgb();
-    context.lineWidth = SHIP_LINE_WIDTH;
-    context.beginPath();
-    context.moveTo(START_COORDS_X + shipCoords[0][0],START_COORDS_Y + shipCoords[0][1]);
-    for(var i = 1; i < shipCoords.length; i++){
-      var x = START_COORDS_X + shipCoords[i][0];
-      var y = START_COORDS_Y + shipCoords[i][1];
-      context.lineTo(x, y);
-    }
-    context.closePath();
-    context.stroke();
-  }
-
-  game.keyDown = function(e){
-    if(e.keyCode == 38){
-      // Key up
-      for(var p in gameState.colours){
-        if(gameState.colours.hasOwnProperty(p)){
-          gameState.colours[p] = Math.round(Math.random() * 255);
+  function drawObject(object){
+    return function(context){
+      var coords = object.getCoords(),
+        i;
+      context.strokeStyle = object.getColour();
+      context.lineWidth = object.getLineWidth();
+      context.beginPath();
+      for(i = 0; i < coords.length; i++){
+        if(i === 0){
+          context.moveTo(coords[i].x, coords[i].y);
+        } else {
+          context.lineTo(coords[i].x, coords[i].y);  
         }
       }
-    }
+      context.closePath();
+      context.stroke();
+    };
+  }
 
-    if(e.keyCode == 40){
-      // Key down
+  function drawObjects(context){
+    var objects = gameState.getObjects();
+    for(var object in objects){
+      drawObject(objects[object])(context);
     }
-
-    if(e.keyCode == 37){
-      // Arrow left
-    }
-
-    if(e.keyCode == 39){
-      // Arrow right
-    }
-  };
+  }
 
   function getContext(){
     return canvasElement.getContext("2d");
@@ -78,12 +57,16 @@ var Game = function(canvasElement){
   function initialise(){
     canvasElement.width = GAME_WIDTH;
     canvasElement.height = GAME_HEIGHT;
+    var events = ['keydown', 'keyup'];
+    for(var ev in events){
+      window.addEventListener(events[ev], gameState[events[ev]], false);
+    }
+    gameState.newPlayerShip(GAME_WIDTH / 2, GAME_HEIGHT / 2);
   }
 
   initialise();
 
   return {
-    update: game.update,
-    keyDown: game.keyDown
+    update: game.update
   };
 };
