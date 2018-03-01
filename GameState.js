@@ -21,11 +21,20 @@ var GameState = function(){
     if(e.keyCode == input.up){
       playerShip.setAccelerating(true);
     }
+    if(e.keyCode == input.left){
+    	playerShip.setTurning("left");
+    }
+    if(e.keyCode == input.right){
+    	playerShip.setTurning("right");
+    }
   }
 
   function keyUp(e){
     if(e.keyCode == input.up){
       playerShip.setAccelerating(false);
+    }
+    if(e.keyCode == input.left || e.keyCode == input.right){
+    	playerShip.setTurning(undefined);
     }
   }
 
