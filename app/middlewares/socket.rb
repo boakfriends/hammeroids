@@ -12,7 +12,7 @@ module Hammeroids
         ws = Faye::WebSocket.new(env, nil, ping: KEEP_ALIVE)
         ws.on :open do |event|
           @players << ws
-          ws.send(player_list.to_json)
+          @players.each {|player|player.send(player_list.to_json)}
         end
 
         ws.on :message do |event|
@@ -23,6 +23,7 @@ module Hammeroids
           p [:close, ws.object_id, event.code, event.reason]
           @players.delete(ws)
           ws = nil
+          @players.each {|player|player.send(player_list.to_json)}
         end
 
         ws.rack_response
