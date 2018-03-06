@@ -1,5 +1,6 @@
 var GameState = function(){
   var playerShip,
+  sockets = new Sockets(),
     input = {
       'up': 38,
       'down': 40,
@@ -40,6 +41,16 @@ var GameState = function(){
 
   function update(){
     playerShip.update();
+    updateNetworkState();
+  }
+
+  function updateNetworkState(){
+    sockets.updatePlayerShipState(playerShip.getShipState());
+    updateNetworkObjects();
+  }
+
+  function updateNetworkObjects(){
+    sockets.getNetworkObjects();
   }
 
   function getObjects(){

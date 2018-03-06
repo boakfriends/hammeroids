@@ -6,7 +6,6 @@ var Ship = function(startXPos, startYPos){
       [0, 2],
       [-7, 8]
     ],
-    xPos = startXPos,
     shipLineWidth = 2,
     yAcceleration = 2,
     yMomentum = 0,
@@ -15,7 +14,7 @@ var Ship = function(startXPos, startYPos){
     physics = new Physics(friction, 3, startYPos, startXPos);
 
   function getShipState(){
-    return 'Ship isAccelerating: ' + isAccelerating;
+    return physics.getState();
   }
 
   function update(){
@@ -67,6 +66,7 @@ var Ship = function(startXPos, startYPos){
     setTurning: setTurning,
     update: update,
     getCoords: getCoords,
+    getShipState: getShipState,
     getColour: getColour,
     getLineWidth: getLineWidth
   };

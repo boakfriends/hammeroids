@@ -22,8 +22,12 @@ var Physics = function(friction, acceleration, startYPos, startXPos){
 		angularMomentum = angularMomentum * friction;
 	}
 
-	function getYPos(){
-		return yPos;
+	function getState(){
+		return {
+			x: xPos,
+			y: yPos,
+			angle: angle
+		}
 	}
 
 	function turn(momentumFunction){
@@ -42,9 +46,9 @@ var Physics = function(friction, acceleration, startYPos, startXPos){
 	return {
 		update: update,
 		accel: accel,
-		getYPos: getYPos,
 		turn: turn,
-		getTransform: getTransform
+		getTransform: getTransform,
+		getState: getState
 	};
 
 };
