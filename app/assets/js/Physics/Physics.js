@@ -1,10 +1,10 @@
-var Physics = function(friction, acceleration, startYPos, startXPos){
+var Physics = function(friction, acceleration, startXPos, startYPos, angle, xMomentum, yMomentum){
 	var xMomentum = 0,
 		yMomentum = 0,
 		angularMomentum = 0,
 		yPos = startYPos,
 		xPos = startXPos,
-		angle = 0;
+		angle = angle;
 
 	function accel(){
 		var yMomentumAddition = -Math.cos(angle * Math.PI / 180),
@@ -26,7 +26,9 @@ var Physics = function(friction, acceleration, startYPos, startXPos){
 		return {
 			x: xPos,
 			y: yPos,
-			angle: angle
+			angle: angle,
+			xMom: xMomentum,
+			yMom: yMomentum
 		}
 	}
 

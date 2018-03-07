@@ -1,8 +1,8 @@
 var Game = function(canvasElement){
   var game = this,
     gameState = new GameState(),
-    GAME_WIDTH = 200,
-    GAME_HEIGHT = 200;
+    GAME_WIDTH = 800,
+    GAME_HEIGHT = 600;
   
   game.update = function(){
     updateState();
