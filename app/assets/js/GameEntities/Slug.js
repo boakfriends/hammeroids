@@ -12,7 +12,7 @@ var Slug = function (xPos, yPos, angle, xMomentum, yMomentum){
 	}
 
 	function getColour(){
-		return 'rgb(200,200,200)'
+		return 'rgb(200,200,200)';
 	}
 
 	function getLineWidth(){
@@ -28,7 +28,6 @@ var Slug = function (xPos, yPos, angle, xMomentum, yMomentum){
 		getCoords: getCoords,
 		getColour: getColour,
 		getLineWidth: getLineWidth,
-		getCoords: getCoords,
 		update: update
 	};
-}
+};
