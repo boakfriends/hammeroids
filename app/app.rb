@@ -1,4 +1,5 @@
-%w[require_all puma sinatra faye/websocket].each { |library| require library }
+%w[require_all active_support/core_ext/object/json
+   puma sinatra faye/websocket].each { |library| require library }
 ENV['RACK_ENV'] ||= 'development'
 require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'
