@@ -13,6 +13,7 @@ end
 
 group :test do
   gem 'byebug'
+  gem 'faker'
   gem 'rack-test'
   gem 'rspec'
   gem 'webmock'
