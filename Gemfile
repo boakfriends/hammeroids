@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.4.2'
 
+gem 'activesupport'
 gem 'dotenv', groups: [:development, :test]
 gem 'faye-websocket'
 gem 'puma'
@@ -13,6 +14,7 @@ end
 
 group :test do
   gem 'byebug'
+  gem 'faker'
   gem 'rack-test'
   gem 'rspec'
   gem 'webmock'
