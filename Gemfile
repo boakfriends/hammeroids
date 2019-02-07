@@ -3,7 +3,8 @@ ruby '2.6.1'
 
 gem 'activesupport'
 gem 'dotenv', groups: [:development, :test]
-gem 'puma'
+gem "em-websocket"
+gem 'thin'
 gem 'require_all'
 gem 'sinatra'
 

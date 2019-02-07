@@ -3,7 +3,7 @@
 Description:
 A little game with a JS frontend and Ruby backend
 
-Author: Jason Porter
+Author: Jason Porter (and Dan Goodwin)
 
 
 ## Setup
@@ -14,16 +14,10 @@ Run to install gems
 bundle
 ```
 
+Copy `.env.sample` to `.env` and set values.
+
 ## Start server
-Install [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
 
 ```
-heroku local
+bundle exec rackup
 ```
-
-or launch puma directly
-
-```
-bundle exec puma -p 5000
-```
-
