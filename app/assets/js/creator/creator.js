@@ -1,30 +1,31 @@
-var Creator = function(canvas){
+var Creator = function(draw){
 	var coords = [],
 		startLine;
 
-	function getMouseCoords(ev){
-		var rect = canvas.getBoundingClientRect();
-		return{
-			x: ev.clientX - rect.left,
-			y: ev.clientY - rect.top
-		};
+	function mouseUp(event){
+		if(draw.inBounds(event)){
+			if(coords){
+				var lastCoord = draw.getMouseCoords(event);
+				coords.push(lastCoord);
+				draw.drawLine(coords);
+				startLine = undefined;
+			} else {
+				coords = draw.getMouseCoords(event);
+			}
+			updateCoords();
+		}
 	}
 
-	function mouseUp(event){
-		if(coords){
-			var lastCoord = getMouseCoords(event);
-			coords.push(lastCoord);
-			drawLine();
-			startLine = undefined;
-		} else {
-			coords = getMouseCoords(event);
+	function mouseMove(event){
+		if(coords.length > 0){
+			draw.drawFaintLine(coords, event);
 		}
-		updateCoords();
 	}
 
 	function initialise(){
 		window.addEventListener("mouseup", mouseUp);
-		
+		window.addEventListener("mousemove", mouseMove);
+		draw.initialise();
 	}
 
 	// Takes a list of coords as objects with x and y members and turns them to a list of lists of numbers
@@ -34,25 +35,12 @@ var Creator = function(canvas){
 			var coord = coords[i];
 			tempCoords.push([coord.x, coord.y]);
 		}
-		return JSON.stringify(tempCoords);
+		return JSON.stringify(tempCoords).replace(/],/g, "],\n");
 	}
 
 	function updateCoords(){
 		var coordsElement = document.getElementById("coords");
 		coordsElement.innerText = xyToCoords();
-	}
-
-	function drawLine(){
-		var context = canvas.getContext("2d");
-		context.beginPath();
-		for(var i = 0; i < coords.length; i++){
-			if(i === 0){
-				context.moveTo(coords[i].x, coords[i].y);
-			} else {
-				context.lineTo(coords[i].x, coords[i].y);
-			}
-		}
-		context.stroke();
 	}
 
 	return {
@@ -61,6 +49,7 @@ var Creator = function(canvas){
 };
 
 window.onload = function(){
-	var creator = new Creator(document.getElementById("canvas"));
+	var draw = new Draw(document.getElementById("canvas"));
+	var creator = new Creator(draw);
 	creator.initialise();
 };
