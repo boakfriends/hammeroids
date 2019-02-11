@@ -6,7 +6,6 @@ var Creator = function(draw){
 			var lastCoord = draw.getMouseCoords(event);
 			coords.push(lastCoord);
 			draw.drawLine(coords);
-			draw.drawPoint(coords);
 			updateCoords();
 		}
 	}
