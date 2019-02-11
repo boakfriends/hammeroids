@@ -1,17 +1,12 @@
 var Creator = function(draw){
-	var coords = [],
-		startLine;
+	var coords = [];
 
 	function mouseUp(event){
 		if(draw.inBounds(event)){
-			if(coords){
-				var lastCoord = draw.getMouseCoords(event);
-				coords.push(lastCoord);
-				draw.drawLine(coords);
-				startLine = undefined;
-			} else {
-				coords = draw.getMouseCoords(event);
-			}
+			var lastCoord = draw.getMouseCoords(event);
+			coords.push(lastCoord);
+			draw.drawLine(coords);
+			draw.drawPoint(coords);
 			updateCoords();
 		}
 	}
