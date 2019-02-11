@@ -11,8 +11,10 @@ var Creator = function(draw){
 	}
 
 	function mouseMove(event){
-		if(coords.length > 0){
+		if(coords.length > 0 && draw.inBounds(event)){
 			draw.drawFaintLine(coords, event);
+		} else {
+			draw.drawLine(coords);
 		}
 	}
 
