@@ -33,6 +33,10 @@ module Hammeroids
       erb :game
     end
 
+    get '/creator' do
+      erb :creator
+    end
+
     run! if __FILE__ == $PROGRAM_NAME
   end
 end
