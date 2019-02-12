@@ -1,8 +1,9 @@
 var Game = function(canvasElement){
   var game = this,
     gameState = new GameState(),
-    GAME_WIDTH = 200,
-    GAME_HEIGHT = 200;
+    GAME_WIDTH = 800,
+    GAME_HEIGHT = 800,
+    context;
   
   game.update = function(){
     updateState();
@@ -51,7 +52,10 @@ var Game = function(canvasElement){
   }
 
   function getContext(){
-    return canvasElement.getContext("2d");
+    if(!game.context){
+      game.context = canvasElement.getContext("2d");
+    }
+    return game.context;
   }
 
   function initialise(){
