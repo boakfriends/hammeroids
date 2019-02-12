@@ -7,7 +7,7 @@ Author: Jason Porter
 
 
 ## Setup
-Requires Ruby 2.4.2
+Requires Ruby 2.6.1
 
 Run to install gems
 ```
