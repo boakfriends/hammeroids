@@ -17,6 +17,8 @@ module Hammeroids
     end
 
     def run
+      Hammeroids::Lobby.new.clear
+
       EventMachine.run do
         EventMachine::WebSocket.start(host: @socket_host, port: @socket_port) do |ws|
           ws.onopen do |handshake|
