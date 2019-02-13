@@ -82,5 +82,3 @@ module Hammeroids
   end
 
 end
-
-run Hammeroids::Launcher.new.run

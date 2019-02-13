@@ -21,3 +21,9 @@ Copy `.env.sample` to `.env` and set values.
 ```
 bundle exec rackup
 ```
+
+## Run tests
+
+ ```
+ bundle exec rspec
+ ```
