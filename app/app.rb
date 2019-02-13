@@ -17,10 +17,15 @@ module Hammeroids
     end
 
     def run
+      Hammeroids::Lobby.new.clear
+
       EventMachine.run do
         EventMachine::WebSocket.start(host: @socket_host, port: @socket_port) do |ws|
+
           ws.onopen do |handshake|
-            puts "open"
+            player = Hammeroids::Player.new.create
+            lobby = Hammeroids::Lobby.new
+            ws.send(lobby.to_json)
           end
 
           ws.onmessage do |msg|
