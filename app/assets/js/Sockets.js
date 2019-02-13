@@ -1,7 +1,7 @@
 var Sockets = function(){
 	var scheme = "ws://",
-		uri = scheme + window.document.location.host,
-		ws = new WebSocket(uri),
+		uri = scheme + window.document.location.host + ':8080' + '/game',
+		ws = new WebSocket("ws://localhost:8080/game"),
 		networkObjects = [];
 
 	function updatePlayerShipState(playerShipState){
