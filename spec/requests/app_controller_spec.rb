@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe GameController, type: :request do
+RSpec.describe "Hammeroids::App", type: :request do
   describe 'GET /' do
     let(:path) { '/' }
 
