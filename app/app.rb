@@ -1,5 +1,5 @@
 %w[require_all 
-   em-websocket thin sinatra].each { |library| require library }
+   em-websocket thin redis sinatra].each { |library| require library }
 ENV['RACK_ENV'] ||= 'development'
 require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'

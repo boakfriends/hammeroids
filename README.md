@@ -14,6 +14,12 @@ Run to install gems
 bundle
 ```
 
+Run to install other local dependencies.
+
+```
+brew bundle
+```
+
 Copy `.env.sample` to `.env` and set values.
 
 ## Start server

@@ -5,6 +5,7 @@ gem 'activesupport'
 gem 'dotenv', groups: [:development, :test]
 gem "em-websocket"
 gem 'thin'
+gem "redis"
 gem 'require_all'
 gem 'sinatra'
 
