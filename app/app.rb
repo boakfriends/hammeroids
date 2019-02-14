@@ -79,6 +79,10 @@ module Hammeroids
     get '/creator' do
       erb :creator
     end
+
+    get '/join' do
+      erb :join
+    end
   end
 
 end
