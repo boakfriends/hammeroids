@@ -56,11 +56,12 @@ module Hammeroids
   # Basic web application
   class App < Sinatra::Base
     set :app_file, __FILE__
-    set :root, File.join(File.dirname(__FILE__), '..')
+    set :root, File.dirname(__FILE__)
     set :logging, true
     set :views, File.join(File.dirname(__FILE__), 'views')
     set :public_folder, File.dirname(__FILE__) + '/assets'
     set :static, true
+    set :pack_location, Webpack.pack_location
 
     configure :development do
       require 'dotenv/load'

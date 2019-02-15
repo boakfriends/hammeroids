@@ -23,6 +23,7 @@ brew bundle
 Copy `.env.sample` to `.env` and set values.
 
 ## Start server
+Starting server in development environment will also start webpack dev server. After changing any files in `javascript/src` webpack dev server will recompile JS and refresh the browser.
 
 ```
 bundle exec rackup
