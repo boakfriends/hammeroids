@@ -60,8 +60,8 @@ module Hammeroids
     set :root, File.join(File.dirname(__FILE__), '..')
     set :logging, true
     set :views, File.join(File.dirname(__FILE__), 'views')
-    set :public_folder, File.dirname(__FILE__) + '/assets'
     set :static, true
+    
 
     configure :development do
       require 'dotenv/load'
@@ -75,6 +75,12 @@ module Hammeroids
 
     configure :production do
       enable :logging
+    end
+
+    get '/js/*' do
+      environment = Sprockets::Environment.new
+      environment.append_path 'app/assets'
+      environment.call(env)
     end
 
     get '/' do

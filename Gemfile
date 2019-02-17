@@ -8,6 +8,7 @@ gem 'thin'
 gem "redis"
 gem 'require_all'
 gem 'sinatra'
+gem 'sprockets', '~> 3.5', '>= 3.5.2'
 
 group :development do
   gem 'racksh'
