@@ -1,5 +1,8 @@
-var Slug = function (xPos, yPos, angle, xMomentum, yMomentum){
-	var physics = new Physics(1, 3, xPos, yPos, angle, xMomentum, yMomentum),
+var Slug = function (xPos, yPos, angle){
+	var SLUG_SPEED = 15,
+		xMomentum = Physics.getCosOfDegrees(angle + 90),
+		yMomentum = Physics.getCosOfDegrees(angle),
+		physics = new Physics(1, 3, xPos, yPos, angle, xMomentum * SLUG_SPEED, yMomentum * SLUG_SPEED),
 		slugCoords = [[0,4],[0,-4]],
 		slugLineWidth = 4;
 
@@ -20,7 +23,6 @@ var Slug = function (xPos, yPos, angle, xMomentum, yMomentum){
 	}
 
 	function update(){
-		physics.accel();
 		physics.update();
 	}
 

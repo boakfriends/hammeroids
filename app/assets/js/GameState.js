@@ -4,7 +4,8 @@ var GameState = function(){
     sockets = new Sockets(),
     playerFiring,
     lastFired = 0,
-    firingDelay = 200,
+    firingDelay = 100,
+    firingAllowed = true,
     input = {
       'up': 38,
       'down': 40,
@@ -26,15 +27,19 @@ var GameState = function(){
   function keyDown(e){
     if(e.keyCode == input.up){
       playerShip.setAccelerating(true);
+      e.preventDefault();
     }
     if(e.keyCode == input.left){
     	playerShip.setTurning("left");
+      e.preventDefault();
     }
     if(e.keyCode == input.right){
     	playerShip.setTurning("right");
+      e.preventDefault();
     }
     if(e.keyCode == input.fire){
       setFiring(true);
+      e.preventDefault();
     }
   }
 
@@ -62,15 +67,12 @@ var GameState = function(){
   }
 
   function updateFiring(){
-    if(playerFiring && firingAllowed()){
+    if(playerFiring && firingAllowed){
       var shipState = playerShip.getShipState();
-      objects.push(new Slug(shipState.x, shipState.y, shipState.angle, shipState.xMom, shipState.yMom));
-      lastFired = new Date().getTime();
+      objects.push(new Slug(shipState.x, shipState.y, shipState.angle));
+      firingAllowed = false;
+      setTimeout(function(){firingAllowed = true;}, firingDelay);
     }
-  }
-
-  function firingAllowed(){
-    return new Date().getTime() - lastFired > firingDelay;
   }
 
   function updateObjects(){

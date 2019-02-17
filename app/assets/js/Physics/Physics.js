@@ -4,8 +4,8 @@ var Physics = function(friction, acceleration, startXPos, startYPos, angle, xMom
 		xPos = startXPos;
 
 	function accel(){
-		var yMomentumAddition = -Math.cos(angle * Math.PI / 180),
-			xMomentumAddition = -Math.cos((angle + 90) * Math.PI / 180);
+		var yMomentumAddition = Physics.getCosOfDegrees(angle),
+			xMomentumAddition = Physics.getCosOfDegrees(angle + 90);
 		yMomentum = yMomentum + yMomentumAddition;
 		xMomentum = xMomentum + xMomentumAddition;
 	}
@@ -50,4 +50,8 @@ var Physics = function(friction, acceleration, startXPos, startYPos, angle, xMom
 		getState: getState
 	};
 
+};
+
+Physics.getCosOfDegrees = function(angle){
+	return -Math.cos(angle * Math.PI / 180);
 };
