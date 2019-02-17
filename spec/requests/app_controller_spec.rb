@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe "Hammeroids::App", type: :request do
-  describe 'GET /' do
+  describe 'GET /join' do
     let(:path) { '/' }
 
     it 'is successful' do
@@ -10,12 +10,23 @@ RSpec.describe "Hammeroids::App", type: :request do
     end
   end
 
-  describe 'GET /join' do
-    let(:path) {'/join'}
+  describe "POST /game" do
+    let(:path) { "/game" }
 
-    it 'is successful' do
-      get path
-      expect(last_response.successful?).to eql true
+    context "with params" do
+      let(:params) do
+        { name: Faker::Name.name }
+      end
+
+      it "is successful" do
+        post path, params: params
+        expect(last_response.successful?).to eql true
+      end
+
+      it "is contains player UUID data attribute" do
+        post path, params: params
+        expect(last_response.body).to match(/data\-player\-uuid\=\"[a-z0-9\-]{36}\"/)
+      end
     end
   end
 end

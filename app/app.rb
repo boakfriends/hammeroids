@@ -78,16 +78,16 @@ module Hammeroids
     end
 
     get '/' do
+      erb :join
+    end
+
+    post '/game' do
+      @player = Hammeroids::Player.create(name: params["name"])
       erb :game
     end
 
     get '/creator' do
       erb :creator
     end
-
-    get '/join' do
-      erb :join
-    end
   end
-
 end
