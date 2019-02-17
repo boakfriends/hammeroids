@@ -3,27 +3,33 @@
 Description:
 A little game with a JS frontend and Ruby backend
 
-Author: Jason Porter
+Author: Jason Porter (and Dan Goodwin)
 
 
 ## Setup
-Requires Ruby 2.4.2
+Requires Ruby 2.6.1
 
 Run to install gems
 ```
 bundle
 ```
 
+Run to install other local dependencies.
+
+```
+brew bundle
+```
+
+Copy `.env.sample` to `.env` and set values.
+
 ## Start server
-Install [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
 
 ```
-heroku local
+bundle exec rackup
 ```
 
-or launch puma directly
+## Run tests
 
-```
-bundle exec puma -p 5000
-```
-
+ ```
+ bundle exec rspec
+ ```

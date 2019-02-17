@@ -1,7 +1,7 @@
 var Sockets = function(){
 	var scheme = "ws://",
-		uri = scheme + window.document.location.host,
-		ws = new WebSocket(uri),
+		uri = scheme + window.document.location.host + ':8080' + '/game',
+		ws = new WebSocket("ws://localhost:8080/game"),
 		networkObjects = [];
 
 	function updatePlayerShipState(playerShipState){
@@ -14,11 +14,12 @@ var Sockets = function(){
 
 	ws.onmessage = function(event){
 		var data = JSON.parse(event.data);
+                console.log(data);
 
-	}
+	};
 
 	return {
 		updatePlayerShipState: updatePlayerShipState,
 		getNetworkObjects: getNetworkObjects
 	};
-}
+};

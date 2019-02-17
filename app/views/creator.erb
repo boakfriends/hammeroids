@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>Entity Creator</title>
+  <style>
+    canvas{
+      border: 1px solid black;
+    }
+    .screen{
+      position: relative;
+    }
+    .coordsbox{
+      display: inline-block;
+      position: absolute;
+    }
+  </style>
+  </head>
+
+  <body>
+    <h2>Entity Creator</h2>
+    <div class="toolbar">
+    <input value="draw" type="radio" name="draw_mode" checked>
+    <label for="draw">Draw</label>
+    <input value="edit" type="radio" name="draw_mode">
+    <label for="edit">Edit</label>
+    <input value="delete" type="radio" name="draw_mode">
+    <label for="delete">Delete</label>
+    </div>
+    <div class="screen">
+      <canvas id="canvas"></canvas>
+      <div class="coordsbox">
+        <span>Coords:</span>
+        <br>
+        <span id="coords">[]</span>
+      </div>
+  </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/creator/drawer.js" ></script>
+    <script type="text/javascript" src="js/creator/creator.js" ></script>
+  </body>
+</html>
