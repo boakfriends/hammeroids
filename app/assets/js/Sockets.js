@@ -4,9 +4,11 @@ var Sockets = function(){
     ws = new WebSocket("ws://localhost:8080/game"),
     networkObjects = [];
 
-  function updatePlayerShipState(playerShipState){
-    ws.send(JSON.stringify(playerShipState));
-  }
+	function updatePlayerShipState(playerShipState){
+		if(ws.readyState === 1){
+			ws.send(JSON.stringify(playerShipState));
+		}
+	}
 
   function getNetworkObjects(){
     return networkObjects;
