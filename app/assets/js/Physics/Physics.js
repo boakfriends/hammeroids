@@ -1,17 +1,14 @@
-var Physics = function(friction, acceleration, startYPos, startXPos){
-  var xMomentum = 0,
-    yMomentum = 0,
-    angularMomentum = 0,
-    yPos = startYPos,
-    xPos = startXPos,
-    angle = 0;
+var Physics = function(friction, acceleration, startXPos, startYPos, angle, xMomentum, yMomentum){
+	var angularMomentum = 0,
+		yPos = startYPos,
+		xPos = startXPos;
 
-  function accel(){
-    var yMomentumAddition = -Math.cos(angle * Math.PI / 180),
-      xMomentumAddition = -Math.cos((angle + 90) * Math.PI / 180);
-    yMomentum = yMomentum + yMomentumAddition;
-    xMomentum = xMomentum + xMomentumAddition;
-  }
+	function accel(){
+		var yMomentumAddition = Physics.getCosOfDegrees(angle),
+			xMomentumAddition = Physics.getCosOfDegrees(angle + 90);
+		yMomentum = yMomentum + yMomentumAddition;
+		xMomentum = xMomentum + xMomentumAddition;
+	}
 
   function update(){
     yMomentum = yMomentum * friction;
@@ -22,13 +19,15 @@ var Physics = function(friction, acceleration, startYPos, startXPos){
     angularMomentum = angularMomentum * friction;
   }
 
-  function getState(){
-    return {
-      x: xPos,
-      y: yPos,
-      angle: angle
-    };
-  }
+	function getState(){
+		return {
+			x: xPos,
+			y: yPos,
+			angle: angle,
+			xMom: xMomentum,
+			yMom: yMomentum
+		};
+	}
 
   function turn(momentumFunction){
     angularMomentum = momentumFunction(angularMomentum, acceleration);
@@ -51,4 +50,8 @@ var Physics = function(friction, acceleration, startYPos, startXPos){
     getState: getState
   };
 
+};
+
+Physics.getCosOfDegrees = function(angle){
+	return -Math.cos(angle * Math.PI / 180);
 };

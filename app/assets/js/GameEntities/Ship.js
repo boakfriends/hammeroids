@@ -10,8 +10,8 @@ var Ship = function(startXPos, startYPos){
     yAcceleration = 2,
     yMomentum = 0,
     friction = 0.9,
-    turning,
-    physics = new Physics(friction, 3, startYPos, startXPos);
+    turning, 
+    physics = new Physics(friction, 3, startXPos, startYPos, 0, 0, 0);
 
   function getShipState(){
     return physics.getState();
