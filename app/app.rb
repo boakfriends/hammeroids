@@ -23,7 +23,6 @@ module Hammeroids
         EventMachine::WebSocket.start(host: @socket_host, port: @socket_port) do |ws|
 
           ws.onopen do |handshake|
-            player = Hammeroids::Player.new.create
             lobby = Hammeroids::Lobby.new
             ws.send(lobby.to_json)
           end
