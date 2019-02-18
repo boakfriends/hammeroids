@@ -48,7 +48,7 @@ var GameState = function(){
       playerShip.setAccelerating(false);
     }
     if(e.keyCode == input.left || e.keyCode == input.right){
-    	playerShip.setTurning(undefined);
+      playerShip.setTurning(undefined);
     }
     if(e.keyCode == input.fire){
       setFiring(false);
