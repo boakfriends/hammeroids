@@ -5,7 +5,9 @@ var Sockets = function(){
 		networkObjects = [];
 
 	function updatePlayerShipState(playerShipState){
-		ws.send(JSON.stringify(playerShipState));
+		if(ws.readyState === 1){
+			ws.send(JSON.stringify(playerShipState));
+		}
 	}
 
 	function getNetworkObjects(){
