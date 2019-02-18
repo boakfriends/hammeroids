@@ -23,10 +23,10 @@ var GameState = function(){
       playerShip.setAccelerating(true);
     }
     if(e.keyCode == input.left){
-    	playerShip.setTurning("left");
+      playerShip.setTurning("left");
     }
     if(e.keyCode == input.right){
-    	playerShip.setTurning("right");
+      playerShip.setTurning("right");
     }
   }
 
@@ -35,7 +35,7 @@ var GameState = function(){
       playerShip.setAccelerating(false);
     }
     if(e.keyCode == input.left || e.keyCode == input.right){
-    	playerShip.setTurning(undefined);
+      playerShip.setTurning(undefined);
     }
   }
 
