@@ -40,3 +40,9 @@ bundle exec rackup
  ```
  bundle exec rspec
  ```
+
+ JS tests:
+ 
+ ```
+ npm test
+ ```
