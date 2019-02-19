@@ -5,7 +5,7 @@ class Webpack
   }.freeze
 
   def self.pack_location
-    LOCATIONS.fetch(environment.to_sym)
+    LOCATIONS.fetch(environment.to_sym, nil)
   end
 
   def self.environment
