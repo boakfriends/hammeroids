@@ -5,3 +5,6 @@ node_modules
 
 # development environment variables
 .env
+
+# webpacker
+/app/public/dist/*
