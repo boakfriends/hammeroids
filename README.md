@@ -22,7 +22,13 @@ brew bundle
 
 Copy `.env.sample` to `.env` and set values.
 
-## Start server
+## Start server
+Start redis
+
+```
+redis-server
+```
+
 Starting server in development environment will also start webpack dev server. After changing any files in `javascript/src` webpack dev server will recompile JS and refresh the browser.
 
 ```
