@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 // create a new ES6 class and export it
 export class Thing {
   constructor(name) {
@@ -5,6 +6,10 @@ export class Thing {
   }
 
   greet() {
-    console.log(`hello ${this.name}`)
+    console.log(`hello ${this.name}`);
+  }
+
+  test(){
+    return this.name;
   }
 }
