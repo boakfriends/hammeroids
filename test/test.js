@@ -1,9 +1,12 @@
 var assert = require('assert');
 
-describe('Array', function(){
-  describe('#indexOf()', function(){
-    it('should return -1 when the value is not present', function(){
-      assert.equal([1,2,3].indexOf(4), -1);
+var app = require('../app/javascript/src/thing.js');
+
+describe('Thing', function(){
+  describe('#test()', function(){
+    it('should return the argument it\'s given', function(){
+      var t = new app.Thing('something');
+      assert.equal(t.test(), 'something');
     });
-  })
+  });
 });
