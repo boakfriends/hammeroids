@@ -1,4 +1,7 @@
 language: ruby
+install:
+  - bundle install --path vendor/bundle
+  - npm install
 env:
  - REDIS_URL=some-redis-url SOCKET_PORT=8080 WEB_PORT=5000
-script: bundle exec rspec spec
+script: bundle exec rspec spec && npm test
