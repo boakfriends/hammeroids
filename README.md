@@ -1,5 +1,7 @@
 # Hammeroids
 
+[![Build Status](https://travis-ci.org/boakfriends/hammeroids.svg?branch=master)](https://travis-ci.org/boakfriends/hammeroids)
+
 Description:
 A little game with a JS frontend and Ruby backend
 
