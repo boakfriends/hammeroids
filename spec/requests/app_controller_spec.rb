@@ -12,6 +12,11 @@ RSpec.describe "Hammeroids::App", type: :request do
 
   describe "POST /game" do
     let(:path) { "/game" }
+    let(:mock_player) { instance_double("Hammeroids::Player", id: SecureRandom.uuid) }
+
+    before do
+      allow(Hammeroids::Player).to receive(:create).and_return(mock_player)
+    end
 
     context "with params" do
       let(:params) do
