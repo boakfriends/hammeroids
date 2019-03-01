@@ -6,4 +6,3 @@ console.log("Hello Webpack");
 
 var thing  = new Thing('Dan');
 thing.greet();
-

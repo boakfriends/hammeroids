@@ -1,0 +1,20 @@
+{
+  "rules":{
+    "babel/semi": 0,
+    "no-mixed-spaces-and-tabs": 2,
+    "indent": [1, 2],
+    "no-spaced-func": 1,
+    "space-before-blocks": [1, "always"],
+    "no-var": 2
+  },
+  "env": {
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions":{
+    "sourceType": "module"
+  },
+  "plugins":[
+    "babel"
+  ]
+}
