@@ -6,14 +6,16 @@
 *
 **/
 
-const GameState = require('./game/gamestate').GameState;
-const View = require('./game/view').View;
-const App = require('./game/app').App;
-const Ship = require('./game/entities/ship').Ship;
+import {GameState} from'./game/gamestate';
+import {View} from'./game/view';
+import {App} from'./game/app';
+import {Ship} from'./game/entities/ship';
+import {Sockets} from './game/sockets/sockets.js';
 
 document.addEventListener("DOMContentLoaded",function() {
   const canvasElement = document.getElementById('canvas')
-  const gameState = new GameState(canvasElement);
+  const sockets = new Sockets(window.location.hostname);
+  const gameState = new GameState(canvasElement, sockets);
   gameState.newPlayerShip();
   gameState.addListeners(window.addEventListener);
   const view = new View(gameState);

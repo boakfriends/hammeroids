@@ -42,11 +42,11 @@ describe('Ship', function() {
         ship = new Ship(x, y);
 
       // When
-      ship.setTurning((angularMomentum, acceleration) => angularMomentum + acceleration);
+      ship.setTurning((angularMomentum, turnRate) => angularMomentum + turnRate);
       ship.update();
 
       // Then
-      assert.equal(ship.getState().angle, ship._physics._acceleration * ship._physics._friction);
+      assert.equal(ship.getState().angle, ship._physics._turnRate * ship._physics._friction);
     });
   });
   

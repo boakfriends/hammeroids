@@ -15,13 +15,19 @@ export class Input {
     };
   }
 
+  runFunction = (e, functionMap) => {
+    const func = functionMap[e.keyCode];
+    if(func) {
+      func();
+      e.preventDefault();
+    }
+  }
+
   keydown = (e) => {
-    this._functionMapDown[e.keyCode]();
-    e.preventDefault();
+    this.runFunction(e, this._functionMapDown);
   }
 
   keyup = (e) => {
-    this._functionMapUp[e.keyCode]();
-    e.preventDefault();
+    this.runFunction(e, this._functionMapUp); 
   }
 }

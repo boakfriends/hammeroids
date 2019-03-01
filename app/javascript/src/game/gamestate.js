@@ -1,10 +1,11 @@
 import {Ship} from './entities/ship.js';
 import {Input} from './input/input.js';
 import {Slug} from './entities/slug.js';
+import {Sockets} from './sockets/sockets.js';
 
 export class GameState {
 
-  constructor(canvas) {
+  constructor(canvas, sockets) {
     this._canvasElement = canvas;
     this._gameWidth = 1024;
     this._gameHeight = 768;
@@ -14,6 +15,7 @@ export class GameState {
     this._firingDelay = 100;
     this._firingAllowed = true;
     this._input = new Input(this);
+    this._sockets = sockets;
   }
 
   addListeners = (addListener) => {
@@ -38,6 +40,7 @@ export class GameState {
   update = () => {
     this.getObjects().forEach((object) => object.update());
     this.updateFiring();
+    this.updateNetworkState();
   };
 
   updateFiring = () => {
@@ -77,5 +80,14 @@ export class GameState {
   removeObjects = (predicate) => {
     this._objects = this._objects.filter(function(obj) {return !predicate(obj)});
   };
+
+  updateNetworkState = () => {
+    this._sockets.updatePlayerShipState(this._playerShip.getState());
+    this.updateNetworkObjects();
+  }
+
+  updateNetworkObjects = () => {
+    this._sockets.getNetworkObjects();
+  }
 
 }
