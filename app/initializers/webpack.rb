@@ -1,6 +1,6 @@
 class Webpack
   LOCATIONS = {
-    development: "http://localhost:8081/main.js",
+    development: "http://localhost:8081/",
     production: "/dist/index.js"
   }.freeze
 

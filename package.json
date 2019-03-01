@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "start:dev": "webpack-dev-server",
-    "test": "mocha --recursive --require @babel/register"
+    "test": "mocha --recursive --require @babel/register",
+    "test:creator": "mocha -g 'Creator' --recursive --require @babel/register"
   },
   "repository": {
     "type": "git",
