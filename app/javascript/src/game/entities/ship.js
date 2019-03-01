@@ -25,6 +25,7 @@ export class Ship {
     for(let coord in this._coords) {
       newCoords.push(this._physics.getTransform(this._coords[coord][0], this._coords[coord][1]));
     }
+    const xy = {x: this._physics._position.x, y: this._physics._position.y};
     return new PathDrawer(this._strokeStyle, this._lineWidth, newCoords);
   }
 
@@ -42,6 +43,10 @@ export class Ship {
 
   setTurning = (turning) => {
     this._turning = turning;
+  }
+
+  setData = (data) => {
+    this._physics.setState(data);
   }
 
   setName = (name) => {

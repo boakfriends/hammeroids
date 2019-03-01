@@ -20,16 +20,14 @@ module Hammeroids
       Hammeroids::Lobby.new.clear
 
       EventMachine.run do
+
+        channel = EM::Channel.new
+        @count = 0;
         EventMachine::WebSocket.start(host: @socket_host, port: @socket_port) do |ws|
-
           ws.onopen do |handshake|
-            lobby = Hammeroids::Lobby.new
-            ws.send(lobby.to_json)
+            Hammeroids::Connection.new(ws, channel, @count)
           end
 
-          ws.onmessage do |msg|
-            puts msg
-          end
         end
 
         Rack::Server.start(app: Hammeroids::App,

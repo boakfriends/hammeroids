@@ -2,11 +2,11 @@ import {Physics} from '../physics/physics.js'
 import {PathDrawer} from '../drawing/pathdrawer.js';
 
 export class Slug {
-  constructor(x, y, angle) {
+  constructor(position) {
     const SLUG_SPEED = 6,
-      xMomentum = Physics.getCosOfDegrees(angle + 90),
-      yMomentum = Physics.getCosOfDegrees(angle);
-    this._physics = new Physics(1, 3, 1, x, y, angle, xMomentum * SLUG_SPEED, yMomentum * SLUG_SPEED);
+      xMomentum = Physics.getCosOfDegrees(position.angle + 90),
+      yMomentum = Physics.getCosOfDegrees(position.angle);
+    this._physics = new Physics(1, 3, 1, position.x, position.y, position.angle, xMomentum * SLUG_SPEED, yMomentum * SLUG_SPEED);
     this._slugCoords = [[0,4],[0,-4]];
   }
 
@@ -24,5 +24,13 @@ export class Slug {
 
   update = () => {
     this._physics.update();
+  }
+
+  getState = () => {
+    return this._physics.getState();
+  }
+
+  setState = (state) => {
+    this._physics.setState(state);
   }
 }

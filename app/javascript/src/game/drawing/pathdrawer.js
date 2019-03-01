@@ -1,8 +1,10 @@
 export class PathDrawer {
-  constructor(strokeStyle, lineWidth, coords) {
+  constructor(strokeStyle, lineWidth, coords, xy, name = 'playerShip') {
     this._strokeStyle = strokeStyle;
     this._lineWidth = lineWidth;
+    this._xy = xy;
     this._coords = coords;
+    this._name = name;
   }
 
   draw = (context) => {

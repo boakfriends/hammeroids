@@ -14,7 +14,7 @@ describe('Ship', function() {
         ship = new Ship(x, y);
 
       // Then
-      assert.equal(ship.getState().x, x);
+      assert.equal(ship.getState().position.x, x);
     });
   });
 
@@ -30,7 +30,7 @@ describe('Ship', function() {
       ship.update();
 
       // Then
-      assert.equal(ship.getState().x, x + Physics.getCosOfDegrees(90));
+      assert.equal(ship.getState().position.x, x + Physics.getCosOfDegrees(90));
     });
   });
 
@@ -46,7 +46,7 @@ describe('Ship', function() {
       ship.update();
 
       // Then
-      assert.equal(ship.getState().angle, ship._physics._turnRate * ship._physics._friction);
+      assert.equal(ship.getState().position.angle, ship._physics._turnRate * ship._physics._friction);
     });
   });
   
