@@ -5,12 +5,21 @@
     <%= partial "layout/css" %>
   </head>
   <body>
-    <h1>Join Game</h1>
-    <form action="/game" method="post">
-      <label for="name">Enter name:</label>
-      <input type="text" name="name" autofocus>
-      <button type="submit">Submit</button>
-    </form>
-
+    <div class="container">
+      <div class="row">
+        <div class="twelve columns">
+          <h1>Join Game</h1>
+          <form action="/game" method="post">
+            <div class="row">
+              <div class="twelve columns">
+                <label for="name">Enter name:</label>
+                <input type="text" name="name" autofocus>
+              </div>
+            </div>
+            <button type="submit" class="button-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
