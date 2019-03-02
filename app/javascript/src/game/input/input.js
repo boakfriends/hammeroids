@@ -5,13 +5,15 @@ export class Input {
       38: () => this._gameState._playerShip.setAccelerating(true),
       37: () => this._gameState._playerShip.setTurning((momentum, acceleration) => momentum - acceleration),
       39: () => this._gameState._playerShip.setTurning((momentum, acceleration) => momentum + acceleration),
-      32: () => this._gameState._firing = true
+      32: () => this._gameState._firing = true,
+      90: () => this._gameState._showDetail = true
     };
     this._functionMapUp = {
       38: () => this._gameState._playerShip.setAccelerating(false),
       37: () => this._gameState._playerShip.setTurning(undefined),
       39: () => this._gameState._playerShip.setTurning(undefined),
-      32: () => this._gameState._firing = false
+      32: () => this._gameState._firing = false,
+      90: () => this._gameState._showDetail = false
     };
   }
 

@@ -18,6 +18,10 @@ export class Slug {
     return new PathDrawer('rgb(255,255,255)', 4, newCoords);
   }
 
+  getDetail = () => {
+    return {draw: () => {}}
+  }
+
   update = () => {
     this._physics.update();
   }

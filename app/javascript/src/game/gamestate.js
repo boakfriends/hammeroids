@@ -5,7 +5,7 @@ import {Sockets} from './sockets/sockets.js';
 
 export class GameState {
 
-  constructor(canvas, sockets) {
+  constructor(canvas, sockets, name) {
     this._canvasElement = canvas;
     this._gameWidth = 1024;
     this._gameHeight = 768;
@@ -16,6 +16,8 @@ export class GameState {
     this._firingAllowed = true;
     this._input = new Input(this);
     this._sockets = sockets;
+    this._showDetail = false;
+    this._name = name;
   }
 
   addListeners = (addListener) => {
@@ -27,6 +29,7 @@ export class GameState {
 
   newPlayerShip = () => {
     this._playerShip = new Ship(this._gameWidth / 2, this._gameHeight / 2);
+    this._playerShip.setName(this._name);
   };
 
   setHeight = (height) => {
@@ -89,5 +92,10 @@ export class GameState {
   updateNetworkObjects = () => {
     this._sockets.getNetworkObjects();
   }
+
+  showDetail = () => {
+    return this._showDetail;
+  }
+
 
 }

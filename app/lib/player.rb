@@ -1,7 +1,7 @@
 module Hammeroids
   # Represents player stores player UUID in redis.
   class Player
-    attr_accessor :id
+    attr_accessor :id, :name
     LIST_NAME = "players".freeze
 
     def self.create(name: "Guest")
