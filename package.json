@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Just another Multiplayer browser game",
   "private": true,
+  "engines": {
+    "node": ">=8.9.1",
+    "npm": ">=5.0.1"
+  },
   "scripts": {
     "start:dev": "webpack-dev-server",
     "test": "mocha --recursive --require @babel/register",
