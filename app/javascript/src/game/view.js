@@ -15,15 +15,9 @@ export class View {
     this._context.fillRect(0, 0, this._gameWidth, this._gameHeight);
   };
 
-  drawObject = (object) => {
-    object.getDrawer().draw(this._context);
-  };
-
-  drawGameObjects = () => {
+  drawGameObjects = (func) => {
     const objects = this.gameState.getObjects();
-    objects.forEach((object) => {
-      this.drawObject(object);
-    })
+    objects.forEach(func);
   };
 
   updateGameCanvasSize = () => {
@@ -38,6 +32,9 @@ export class View {
 
   update = () => {
     this.drawBackgroundRectangle();
-    this.drawGameObjects();
+    this.drawGameObjects((object) => object.getDrawer().draw(this._context));
+    if(this.gameState.showDetail()) {
+      this.drawGameObjects((object) => object.getDetail().draw(this._context));
+    }
   }
 }

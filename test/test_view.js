@@ -77,6 +77,7 @@ function getMockGameState(canvasSpy, width = 100, height = 200) {
     getCanvasElement: function() {return canvasSpy;},
     getWidth: function() {return width;},
     getHeight: function() {return height},
-    getObjects: function() {return []}
+    getObjects: function() {return []},
+    showDetail: function() {return false}
   };
 }

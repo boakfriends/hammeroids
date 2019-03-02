@@ -15,7 +15,7 @@ import {Sockets} from './game/sockets/sockets.js';
 document.addEventListener("DOMContentLoaded",function() {
   const canvasElement = document.getElementById('canvas')
   const sockets = new Sockets(window.location.hostname);
-  const gameState = new GameState(canvasElement, sockets);
+  const gameState = new GameState(canvasElement, sockets, document.getElementById('name').innerText);
   gameState.newPlayerShip();
   gameState.addListeners(window.addEventListener);
   const view = new View(gameState);

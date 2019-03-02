@@ -1,5 +1,6 @@
 import {Physics} from '../physics/physics.js'
 import {PathDrawer} from '../drawing/pathdrawer.js';
+import {TextDrawer} from '../drawing/textdrawer.js';
 
 export class Ship {
   constructor(x, y) {
@@ -27,6 +28,10 @@ export class Ship {
     return new PathDrawer(this._strokeStyle, this._lineWidth, newCoords);
   }
 
+  getDetail = () => {
+    return new TextDrawer(this._physics._position.x, this._physics._position.y, this._name);
+  }
+
   getState = () => {
     return this._physics.getState();
   }
@@ -37,6 +42,10 @@ export class Ship {
 
   setTurning = (turning) => {
     this._turning = turning;
+  }
+
+  setName = (name) => {
+    this._name = name;
   }
 
   update = () => {
