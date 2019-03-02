@@ -8,10 +8,21 @@
   </head>
 
   <body data-player-uuid="<%= @player.id %>">
-    <div>Name: <span id="name"><%= @player.name %></span></div>
-    <h2>Connected Player IDs</h2>
-    <div id="players"></div>
-    <canvas id="canvas"></canvas>
+    <div class="container">
+      <div class="row">
+        <div class="twelve columns">
+          <h1>Game!</h1>
+          <p><strong>Name:</strong> <span id="name"><%= @player.name %></span></p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="twelve columns">
+          <canvas id="canvas"></canvas>
+        </div>
+      </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <!-- <script type="text/javascript" src="js/GameEntities/Slug.js" ></script> -->
     <!-- <script type="text/javascript" src="js/Sockets.js" ></script> -->
