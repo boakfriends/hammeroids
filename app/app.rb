@@ -77,6 +77,12 @@ module Hammeroids
       enable :logging
     end
 
+    helpers do
+      def partial(page, options: {})
+        erb page.to_sym, options.merge!(layout: false)
+      end
+    end
+
     get '/' do
       erb :join
     end
