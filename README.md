@@ -47,3 +47,25 @@ JS tests:
 ```
 npm test
 ```
+
+## Quirks
+
+Sometimes the webpack-dev-server process doesn't get killed, usually when `bundle exec rackup` is run and event machine reactor fails to start, the dev server starts but isn't closed by `Ctrl+c`.
+
+On the next boot of the application you'll see.
+
+```shell
+Error: listen EADDRINUSE 127.0.0.1:8081
+
+```
+
+Firstly `Ctrl+c`, then find the process using this port and kill it.
+
+```
+$ lsof -i TCP:8081
+
+COMMAND   PID       USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+node    75755 dangoodwin   14u  IPv4 0x2075b4f5a26e69c1      0t0  TCP localhost:sunproxyadmin (LISTEN)
+
+kill 75755
+```
