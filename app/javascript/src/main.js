@@ -12,6 +12,7 @@ import {App} from'./game/app';
 import {Settings} from'./settings';
 import {Ship} from'./game/entities/ship';
 import {Sockets} from './game/sockets/sockets.js';
+import {Camera} from './game/camera/camera.js';
 
 document.addEventListener("DOMContentLoaded",function() {
   const settings = new Settings()
@@ -20,7 +21,8 @@ document.addEventListener("DOMContentLoaded",function() {
   const gameState = new GameState(canvasElement, sockets, document.getElementById('name').innerText);
   gameState.newPlayerShip();
   gameState.addListeners(window.addEventListener);
-  const view = new View(gameState);
+  const camera = new Camera(gameState);
+  const view = new View(gameState, camera);
   let app = new App(60,100);
   app.run(gameState, view);
 });
