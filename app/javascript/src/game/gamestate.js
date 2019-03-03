@@ -10,6 +10,7 @@ export class GameState {
     this._gameWidth = 1024;
     this._gameHeight = 768;
     this._objects = [];
+    this._networkObjects = [];
     this._playerShip;
     this._firing = false;
     this._firingDelay = 100;
@@ -49,7 +50,9 @@ export class GameState {
   updateFiring = () => {
     if(this._firing && this._firingAllowed) {
       const shipState = this._playerShip.getState();
-      this.addObject(new Slug(shipState.x, shipState.y, shipState.angle));
+      const slug = new Slug(shipState.position);
+      this.addObject(slug);
+      this._sockets.fire(slug.getState());
       this._firingAllowed = false;
       setTimeout(() => this._firingAllowed = true, this._firingDelay);
     }
@@ -73,6 +76,7 @@ export class GameState {
     if(this._playerShip) {
       gameObjects.push(this._playerShip);
     }
+    this._networkObjects.forEach((obj) => gameObjects.push(obj));
     return gameObjects;
   };
 
@@ -85,12 +89,12 @@ export class GameState {
   };
 
   updateNetworkState = () => {
-    this._sockets.updatePlayerShipState(this._playerShip.getState());
+    this._sockets.updatePlayerShipState(this._playerShip.getState(), this._name);
     this.updateNetworkObjects();
   }
 
   updateNetworkObjects = () => {
-    this._sockets.getNetworkObjects();
+    this._networkObjects = this._sockets.getNetworkObjects();
   }
 
   showDetail = () => {

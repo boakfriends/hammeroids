@@ -21,6 +21,7 @@ describe('Sockets', function() {
       // Given
       const hostname = "localhost";
       const socket = new Sockets(hostname, {send: sinon.spy(), readyState: 1});
+      socket._id = 1
 
       // When
       socket.updatePlayerShipState({});

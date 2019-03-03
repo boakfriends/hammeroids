@@ -36,7 +36,12 @@ export class Physics {
   }
 
   getState = () => {
-    return this._position;
+    return {"position": this._position, "momentum": this._momentum};
+  }
+
+  setState = (data) => {
+    this._position = data.position;
+    this._momentum = data.momentum;
   }
 
   getTransform = (x, y) => {

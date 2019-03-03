@@ -19,8 +19,8 @@ describe('Physics', function() {
       physics.update();
 
       // Then
-      assert.equal(physics.getState().x, xMomentum * friction + x);
-      assert.equal(physics.getState().y, yMomentum * friction + y);
+      assert.equal(physics.getState().position.x, xMomentum * friction + x);
+      assert.equal(physics.getState().position.y, yMomentum * friction + y);
     });
 
     it('Should update x and y positions using acceleration, friction and current momentum when accelerating', function() {
@@ -40,8 +40,8 @@ describe('Physics', function() {
       physics.update();
 
       // Then
-      assert.equal(physics.getState().x, (xMomentum + (Physics.getCosOfDegrees(angle + 90)) * acceleration) * friction + x, "x postition should be correct");
-      assert.equal(physics.getState().y, (yMomentum + (Physics.getCosOfDegrees(angle)) * acceleration) * friction + y, 'y position should be correct');
+      assert.equal(physics.getState().position.x, (xMomentum + (Physics.getCosOfDegrees(angle + 90)) * acceleration) * friction + x, "x postition should be correct");
+      assert.equal(physics.getState().position.y, (yMomentum + (Physics.getCosOfDegrees(angle)) * acceleration) * friction + y, 'y position should be correct');
     });
 
     it('Shouldn\'t ever update the angle to be more than 360 when turning', function() {
@@ -61,7 +61,7 @@ describe('Physics', function() {
       physics.update();
 
       // Then
-      assert(physics.getState().angle < 360, 'Angle should be less than 360 but was: ' + physics.getState().angle);
+      assert(physics.getState().position.angle < 360, 'Angle should be less than 360 but was: ' + physics.getState().angle);
     });
   });
 
