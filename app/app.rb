@@ -22,10 +22,9 @@ module Hammeroids
       EventMachine.run do
 
         channel = EM::Channel.new
-        @count = 0;
         EventMachine::WebSocket.start(host: @socket_host, port: @socket_port) do |ws|
           ws.onopen do |handshake|
-            Hammeroids::Connection.new(ws, channel, @count)
+            Hammeroids::Connection.new(ws, channel)
           end
 
         end
