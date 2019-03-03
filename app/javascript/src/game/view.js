@@ -1,3 +1,5 @@
+import {Camera} from './camera/camera.js';
+
 export class View {
 
   constructor(gameState) {
@@ -7,6 +9,7 @@ export class View {
     this._gameWidth = this.gameState.getWidth();
     this._gameHeight = this.gameState.getHeight();
     this.updateGameCanvasSize();
+    this._camera = new Camera(gameState);
   }
 
   drawBackgroundRectangle = (width, height) => {
@@ -15,8 +18,7 @@ export class View {
     this._context.fillRect(0, 0, this._gameWidth, this._gameHeight);
   };
 
-  drawGameObjects = (func) => {
-    const objects = this.gameState.getObjects();
+  updateObjectsWithFunctions = (objects, func) => {
     objects.forEach(func);
   };
 
@@ -31,10 +33,13 @@ export class View {
   */
 
   update = () => {
+    this._context.setTransform(1,0,0,1,0,0);
     this.drawBackgroundRectangle();
-    this.drawGameObjects((object) => object.getDrawer().draw(this._context));
+    this._camera.update(this._context);
+    this.updateObjectsWithFunctions(this.gameState._spaceDust, (object) => object.getDrawer().draw(this._context));
+    this.updateObjectsWithFunctions(this.gameState.getObjects(),(object) => object.getDrawer().draw(this._context));
     if(this.gameState.showDetail()) {
-      this.drawGameObjects((object) => object.getDetail().draw(this._context));
+      this.updateObjectsWithFunctions(this.gameState.getObjects(), (object) => object.getDetail().draw(this._context));
     }
   }
 }

@@ -1,13 +1,11 @@
 export class PathDrawer {
-  constructor(strokeStyle, lineWidth, coords) {
-    this._strokeStyle = strokeStyle;
-    this._lineWidth = lineWidth;
+  constructor(coords, params) {
     this._coords = coords;
+    this._params = params;
   }
 
   draw = (context) => {
-    context.strokeStyle = this._strokeStyle;
-    context.lineWidth = this._lineWidth;
+    this._params.forEach((param) => context[param.key] = param.value);
     context.beginPath();
     for(let i = 0; i < this._coords.length; i++) {
       if(i === 0) {

@@ -2,6 +2,7 @@ import {Ship} from './entities/ship.js';
 import {Input} from './input/input.js';
 import {Slug} from './entities/slug.js';
 import {Sockets} from './sockets/sockets.js';
+import {DustParticle} from './entities/dustparticle.js';
 
 export class GameState {
 
@@ -10,6 +11,7 @@ export class GameState {
     this._gameWidth = 1024;
     this._gameHeight = 768;
     this._objects = [];
+    this._spaceDust = [];
     this._playerShip;
     this._firing = false;
     this._firingDelay = 100;
@@ -18,6 +20,13 @@ export class GameState {
     this._sockets = sockets;
     this._showDetail = false;
     this._name = name;
+    this._makeDust();
+  }
+
+  _makeDust = () => {
+    Array.from(Array(100).keys()).forEach(() => {
+      this._spaceDust.push(new DustParticle(this));
+    })
   }
 
   addListeners = (addListener) => {
