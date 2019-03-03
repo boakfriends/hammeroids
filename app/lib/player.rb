@@ -4,15 +4,15 @@ module Hammeroids
     attr_accessor :id, :name
     LIST_NAME = "players".freeze
 
-    def self.create(name: "Guest")
-      player = new(name: name)
+    def self.create(id, name: "Guest")
+      player = new(id, name: name)
       player.create
       player
     end
 
-    def initialize(name: "Guest")
+    def initialize(id, name: "Guest")
+      @id = id
       @name = name
-      @id = SecureRandom.uuid
     end
 
     def create

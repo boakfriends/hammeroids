@@ -24,7 +24,8 @@ module Hammeroids
         channel = EM::Channel.new
         EventMachine::WebSocket.start(host: @socket_host, port: @socket_port) do |ws|
           ws.onopen do |handshake|
-            Hammeroids::Connection.new(ws, channel)
+            id = Hammeroids::Connection.new(ws, channel).setup!
+            Hammeroids::Player.create(id, name: "Player #{id}")
           end
 
         end
@@ -85,7 +86,7 @@ module Hammeroids
     end
 
     post '/game' do
-      @player = Hammeroids::Player.create(name: params["name"])
+      @name = params["name"]
       erb :game
     end
 
