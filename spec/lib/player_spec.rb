@@ -2,82 +2,28 @@ require 'spec_helper'
 
 
 RSpec.describe Hammeroids::Player do
-  describe '.create' do
-    subject { described_class.create(id) }
+  describe "#join" do
+    subject { described_class.new(connection, channel, name: name).join }
+    let(:mock_redis) { instance_double("Redis", lpush: nil) }
+    let(:connection) { instance_double("EventMachine::WebSocket::Connection") }
+    let(:channel) { instance_double("EventMachine::Channel") }
+    let(:mock_subscription) { instance_double("Hammeroids::Players::Subscription", create: subscription_id) }
 
-    context "new player" do
-      let(:mock_redis) { instance_double("Redis", lpush: nil) }
-      let(:id) { Faker::Number.between(1, 100) }
+    context "successful subscription" do
+      let(:subscription_id) { Faker::Number.between(1, 100) }
 
       before do
+        allow(Hammeroids::Players::Subscription).to receive(:new).and_return(mock_subscription)
         allow(Redis).to receive(:new).and_return(mock_redis)
       end
 
-      it "returns instance of created player" do
-        expect(subject).to be_an_instance_of(Hammeroids::Player)
-      end
+      context "name" do
+        let(:name) { Faker::RickAndMorty.character }
 
-      it "stores player in redis" do
-        subject
-        expect(mock_redis).to have_received(:lpush)
-      end
-    end
-  end
-
-  describe '#create' do
-    subject { described_class.new(id).create }
-    let(:id) { Faker::Number.between(1, 100) }
-
-    context "new player" do
-      let(:mock_redis) { instance_double("Redis", lpush: nil) }
-
-      before do
-        allow(Redis).to receive(:new).and_return(mock_redis)
-      end
-
-      it "pushes player UUID into redis list" do
-        subject
-        expect(mock_redis).to have_received(:lpush)
-      end
-    end
-  end
-
-  describe '#id' do
-    subject { described_class.new(id).id }
-    let(:id) { Faker::Number.between(1, 100) }
-
-    it "returns ID" do
-      expect(subject).to eq id
-    end
-  end
-
-  describe '#to_h' do
-    subject { described_class.new(id, name: name).to_h }
-    let(:id) { Faker::Number.between(1, 100) }
-
-    context "with name" do
-      let(:name) { Faker::Name.name }
-
-      it "returns a JSON serialised player" do
-        expect(subject).to include(name: name)
-      end
-    end
-  end
-
-  describe '#to_json' do
-    subject { described_class.new(id, name: name).to_json }
-    let(:id) { Faker::Number.between(1, 100) }
-
-    context "with name" do
-      let(:name) { Faker::Name.name }
-
-      it "returns a JSON serialised player" do
-        expect(subject).to include name
-        expect(subject).to include id.to_s
-      end
-
-      it "serialises to JSON String" do
-        expect(subject).to be_an_instance_of(String)
+        it "creates connection and adds player to lobby" do
+          subject
+          expect(mock_redis).to have_received(:lpush).with("players", include(subscription_id.to_s, name))
+        end
       end
     end
   end

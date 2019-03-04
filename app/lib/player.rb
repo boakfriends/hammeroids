@@ -1,27 +1,24 @@
 module Hammeroids
-  # Represents player stores player UUID in redis.
+  # Represents a connection and subscription to the game channel.
+  # Adds the Player to the lobby(redis) list.
   class Player
-    attr_accessor :id, :name
-    LIST_NAME = "players".freeze
+    attr_accessor :name
 
-    def self.create(id, name: "Guest")
-      player = new(id, name: name)
-      player.create
-      player
-    end
-
-    def initialize(id, name: "Guest")
-      @id = id
+    def initialize(connection, channel, name: "Guest")
+      @connection = connection
+      @channel = channel
       @name = name
     end
 
-    def create
-      redis.lpush("players", @id)
+    def join
+      Hammeroids::Lobby.new.add(to_json)
     end
+
+    private
 
     def to_h
       {
-        id: @id,
+        id: subscription_id,
         name: @name
       }
     end
@@ -30,10 +27,8 @@ module Hammeroids
       to_h.to_json
     end
 
-    private
-
-    def redis
-      @redis ||= Redis.new(url: ENV.fetch("REDIS_URL"))
+    def subscription_id
+      @subscription_id ||= Hammeroids::Players::Subscription.new(@connection, @channel).create
     end
   end
 end

@@ -15,35 +15,19 @@ RSpec.describe Hammeroids::Lobby do
     end
   end
 
-  describe '#to_h' do
+  describe "#to_h" do
     subject { described_class.new.to_h }
-    let(:mock_redis) { instance_double("Redis", lrange: player_uuids) }
-    let(:player_uuids) { [SecureRandom.uuid]*2 }
+    let(:mock_redis) { instance_double("Redis", lrange: JSON.generate(players)) }
+    let(:players) do
+      (1..10).map { |id| { id: id, name: Faker::RickAndMorty.character } }
+    end
 
     before do
       allow(Redis).to receive(:new).and_return(mock_redis)
     end
 
-    it "returns a hash containing players" do
-      expect(subject).to include(players: player_uuids)
-    end
-  end
-
-  describe '#to_json' do
-    subject { described_class.new.to_json }
-    let(:mock_redis) { instance_double("Redis", lrange: player_uuids) }
-    let(:player_uuids) { [SecureRandom.uuid]*2 }
-
-    before do
-      allow(Redis).to receive(:new).and_return(mock_redis)
-    end
-
-    it "includes player data in JSON String" do
-      expect(subject).to include *player_uuids
-    end
-
-    it "serialises to JSON String" do
-      expect(subject).to be_an_instance_of(String)
+    it "returns an hash containing lobby data" do
+      expect(subject).to eq(type: "lobby", payload: { players: players })
     end
   end
 end
