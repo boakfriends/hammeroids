@@ -3,14 +3,22 @@ module Hammeroids
     def initialize(socket, channel)
       @socket = socket
       @channel = channel
-      @id = channel.subscribe { |message| @socket.send(message) }
+    end
+
+    def setup!
+      @socket.send(%({"type":"welcome", "id": #{id}}))
       @socket.onmessage { |message| process(message) }
       @socket.onclose { unsubscribe }
-      @socket.send(%({"type":"welcome", "id": #{@id}}))
+    end
+
+    private
+
+    def id
+      @id ||= @channel.subscribe { |message| @socket.send(message) }
     end
 
     def unsubscribe
-      @channel.unsubscribe(@id)
+      @channel.unsubscribe(id)
     end
 
     # deals with incoming data
