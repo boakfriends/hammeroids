@@ -1,52 +1,52 @@
 export class Physics {
   constructor(friction, turnRate, speed, x, y, angle = 0 , xMomentum = 0, yMomentum = 0) {
-    this._friction = friction;
-    this._turnRate = turnRate;
-    this._speed = speed;
-    this._momentum = new Momentum(xMomentum, yMomentum, 0);
-    this._position = new Position(x, y, angle);
+    this.friction = friction;
+    this.turnRate = turnRate;
+    this.speed = speed;
+    this.momentum = new Momentum(xMomentum, yMomentum, 0);
+    this.position = new Position(x, y, angle);
   }
 
-  accel = () => {
-    const xMomentumAddition = Physics.getCosOfDegrees(this._position.angle + 90),
-      yMomentumAddition = Physics.getCosOfDegrees(this._position.angle);
-    this._momentum.xMomentum += xMomentumAddition * this._speed;
-    this._momentum.yMomentum += yMomentumAddition * this._speed;
+  accel() {
+    const xMomentumAddition = Physics.getCosOfDegrees(this.position.angle + 90),
+      yMomentumAddition = Physics.getCosOfDegrees(this.position.angle);
+    this.momentum.xMomentum += xMomentumAddition * this.speed;
+    this.momentum.yMomentum += yMomentumAddition * this.speed;
   }
 
-  update = () => {
+  update() {
     this.updateMomentum();
     this.updatePosition();
   }
 
-  updateMomentum = () => {
-    for (let key in this._momentum) {
-      this._momentum[key] *= this._friction;
+  updateMomentum() {
+    for (let key in this.momentum) {
+      this.momentum[key] *= this.friction;
     }
   }
 
-  updatePosition = () => {
-    this._position.x += this._momentum.xMomentum;
-    this._position.y += this._momentum.yMomentum;
-    this._position.angle = (this._momentum.angularMomentum + this._position.angle) % 360;
+  updatePosition() {
+    this.position.x += this.momentum.xMomentum;
+    this.position.y += this.momentum.yMomentum;
+    this.position.angle = (this.momentum.angularMomentum + this.position.angle) % 360;
   }
 
-  turn = (momentumFunction) => {
-    this._momentum.angularMomentum = momentumFunction(this._momentum.angularMomentum, this._turnRate);
+  turn(momentumFunction) {
+    this.momentum.angularMomentum = momentumFunction(this.momentum.angularMomentum, this.turnRate);
   }
 
-  getState = () => {
-    return {"position": this._position, "momentum": this._momentum};
+  getState() {
+    return {"position": this.position, "momentum": this.momentum};
   }
 
-  setState = (data) => {
-    this._position = data.position;
-    this._momentum = data.momentum;
+  setState(data) {
+    this.position = data.position;
+    this.momentum = data.momentum;
   }
 
-  getTransform = (x, y) => {
-    const xPoint = x * Math.cos(this._position.angle * Math.PI / 180) - y * Math.sin(this._position.angle * Math.PI / 180) + this._position.x,
-      yPoint = x * Math.sin(this._position.angle * Math.PI / 180) + y * Math.cos(this._position.angle * Math.PI / 180) + this._position.y;
+  getTransform(x, y) {
+    const xPoint = x * Math.cos(this.position.angle * Math.PI / 180) - y * Math.sin(this.position.angle * Math.PI / 180) + this.position.x,
+      yPoint = x * Math.sin(this.position.angle * Math.PI / 180) + y * Math.cos(this.position.angle * Math.PI / 180) + this.position.y;
     return {
       x: xPoint,
       y: yPoint

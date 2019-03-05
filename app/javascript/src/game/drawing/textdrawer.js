@@ -5,7 +5,7 @@ export class TextDrawer {
     this.text = text;
   }
 
-  draw = (context) => {
+  draw(context) {
     context.fillStyle = 'white';
     context.font = "10px Arial";
     context.textAlign = "center";
