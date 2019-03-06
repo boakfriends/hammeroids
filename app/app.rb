@@ -24,11 +24,20 @@ module Hammeroids
         channel = EM::Channel.new
         EventMachine::WebSocket.start(host: @socket_host, port: @socket_port) do |connection|
           connection.onopen do |handshake|
-            player = Hammeroids::Player.new(connection, channel)
-            player.join
+            @player = Hammeroids::Player.new(connection, channel)
+            @player.join
             channel.push(Hammeroids::Lobby.new.to_json)
           end
 
+          connection.onmessage do |message|
+            channel.push(message)
+          end
+
+          connection.onclose do
+            channel.unsubscribe(@player.subscription_id)
+            @player.leave
+            channel.push(Hammeroids::Lobby.new.to_json)
+          end
         end
 
         Rack::Server.start(app: Hammeroids::App,

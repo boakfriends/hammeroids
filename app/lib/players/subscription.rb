@@ -9,8 +9,6 @@ module Hammeroids
 
       def create
         @connection.send(%({"type":"welcome", "id": #{id}}))
-        @connection.onmessage { |message| process(message) }
-        @connection.onclose { unsubscribe }
         id
       end
 
@@ -18,15 +16,6 @@ module Hammeroids
 
       def id
         @id ||= @channel.subscribe { |message| @connection.send(message) }
-      end
-
-      def unsubscribe
-        @channel.unsubscribe(id)
-      end
-
-      # deals with incoming data
-      def process(message)
-        @channel << %(#{message}) rescue nil
       end
     end
   end
