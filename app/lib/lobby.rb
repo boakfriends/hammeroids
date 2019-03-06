@@ -13,22 +13,26 @@ module Hammeroids
       redis.del(LIST_KEY)
     end
 
-    def to_h
-      { type: "lobby", payload: { players: JSON.parse(players, symbolize_names: true) } }
-    end
-
     def to_json
-      to_h.to_json
+      JSON.generate(to_h)
     end
 
     private
 
     def players
+      players_json.map { |player_json| JSON.parse(player_json) }
+    end
+
+    def players_json
       redis.lrange(LIST_KEY, 0, -1)
     end
 
     def redis
       @redis ||= Redis.new(url: ENV.fetch("REDIS_URL"))
+    end
+
+    def to_h
+      { "type": "lobby", "payload": { "players": players } }
     end
   end
 end

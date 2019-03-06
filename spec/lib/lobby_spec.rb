@@ -15,19 +15,25 @@ RSpec.describe Hammeroids::Lobby do
     end
   end
 
-  describe "#to_h" do
-    subject { described_class.new.to_h }
-    let(:mock_redis) { instance_double("Redis", lrange: JSON.generate(players)) }
+  describe "#to_json" do
+    subject { described_class.new.to_json }
+    let(:mock_redis) { instance_double("Redis", lrange: players) }
     let(:players) do
-      (1..10).map { |id| { id: id, name: Faker::RickAndMorty.character } }
+      (1..10).map { |id| JSON.generate("id" => id, "name" => Faker::RickAndMorty.character) }
     end
+    let(:parsed_subject) { JSON.parse(subject) }
 
     before do
       allow(Redis).to receive(:new).and_return(mock_redis)
     end
 
-    it "returns an hash containing lobby data" do
-      expect(subject).to eq(type: "lobby", payload: { players: players })
+    it "contains correct keys" do
+      expect(parsed_subject.keys).to include("type", "payload")
+    end
+
+    it "payload contains array of players" do
+      players = parsed_subject.dig("payload", "players")
+      expect(players).to include(hash_including("id", "name"))
     end
   end
 end
