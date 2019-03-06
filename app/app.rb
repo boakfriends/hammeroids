@@ -26,6 +26,7 @@ module Hammeroids
           connection.onopen do |handshake|
             player = Hammeroids::Player.new(connection, channel)
             player.join
+            channel.push(Hammeroids::Lobby.new.to_json)
           end
 
         end

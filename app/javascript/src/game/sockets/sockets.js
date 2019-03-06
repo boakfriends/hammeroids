@@ -1,3 +1,4 @@
+import {MessageRouter} from './message_router.js';
 import {Ship} from '../entities/ship.js';
 import {Slug} from '../entities/slug.js';
 
@@ -16,6 +17,8 @@ export class Sockets {
   }
 
   onMessage = (event) => {
+    const router = new MessageRouter(event)
+    router.action();
     const data = JSON.parse(event.data);
     if(data.type == 'welcome') {
       this.id = data.id;
