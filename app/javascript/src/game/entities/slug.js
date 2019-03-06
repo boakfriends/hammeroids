@@ -15,7 +15,11 @@ export class Slug {
     for(let coord in this.slugCoords) {
       newCoords.push(this.physics.getTransform(this.slugCoords[coord][0], this.slugCoords[coord][1]));
     }
-    return new PathDrawer('rgb(255,255,255)', 4, newCoords);
+    const params = {
+      'strokeStyle': 'rgb(255,255,255)',
+      'lineWidth': 4
+    }
+    return new PathDrawer(newCoords, params);
   }
 
   getDetail() {

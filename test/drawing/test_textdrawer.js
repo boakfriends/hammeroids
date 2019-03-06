@@ -7,15 +7,20 @@ describe('TextDrawer', function() {
   describe('#draw', function() {
     it('Should draw the given text', function() {
       // Given
-      const text = "Hello World";
-      const textDrawer = new TextDrawer(10, 10, text);
+      const text = "Hello World",
+        style = 'white',
+        params = {'strokeStyle': style},
+        x = 10,
+        y = 10,
+        textDrawer = new TextDrawer({'x': x, 'y': y, 'text': text}, params);
       const contextSpy = {fillText: sinon.spy()}
 
       // When
       textDrawer.draw(contextSpy);
 
       // Then
-      assert(contextSpy.fillText.called);
+      assert.equal(contextSpy.strokeStyle, style);
+      assert(contextSpy.fillText.calledWith(text, x, y + 20));
     });
   });
 });

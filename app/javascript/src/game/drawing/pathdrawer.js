@@ -1,13 +1,12 @@
-export class PathDrawer {
-  constructor(strokeStyle, lineWidth, coords, xy, name = 'playerShip') {
-    this.strokeStyle = strokeStyle;
-    this.lineWidth = lineWidth;
+import {Drawer} from './drawer.js';
+
+export class PathDrawer extends Drawer {
+  constructor(coords, params) {
+    super(params);
     this.coords = coords;
   }
 
-  draw(context) {
-    context.strokeStyle = this.strokeStyle;
-    context.lineWidth = this.lineWidth;
+  _draw = (context) => {
     context.beginPath();
     for(let i = 0; i < this.coords.length; i++) {
       if(i === 0) {
