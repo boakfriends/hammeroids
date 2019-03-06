@@ -7,59 +7,59 @@ export class Ship {
     const friction = 0.98,
       speed = 0.1,
       turnRate = 0.2;
-    this._coords = [
+    this.coords = [
       [0, -10],
       [7, 8],
       [0, 2],
       [-7, 8]
     ];
-    this._strokeStyle = 'rgb(255,255,255)'
-    this._lineWidth = 2; 
-    this._turning;
-    this._accelerating = false;
-    this._physics = new Physics(friction, turnRate, speed, x, y);
+    this.strokeStyle = 'rgb(255,255,255)'
+    this.lineWidth = 2; 
+    this.turning;
+    this.accelerating = false;
+    this.physics = new Physics(friction, turnRate, speed, x, y);
   }
 
-  getDrawer = () => {
+  getDrawer() {
     const newCoords = [];
-    for(let coord in this._coords) {
-      newCoords.push(this._physics.getTransform(this._coords[coord][0], this._coords[coord][1]));
+    for(let coord in this.coords) {
+      newCoords.push(this.physics.getTransform(this.coords[coord][0], this.coords[coord][1]));
     }
-    const xy = {x: this._physics._position.x, y: this._physics._position.y};
-    return new PathDrawer(this._strokeStyle, this._lineWidth, newCoords);
+    const xy = {x: this.physics.position.x, y: this.physics.position.y};
+    return new PathDrawer(this.strokeStyle, this.lineWidth, newCoords);
   }
 
-  getDetail = () => {
-    return new TextDrawer(this._physics._position.x, this._physics._position.y, this._name);
+  getDetail() {
+    return new TextDrawer(this.physics.position.x, this.physics.position.y, this.name);
   }
 
-  getState = () => {
-    return this._physics.getState();
+  getState() {
+    return this.physics.getState();
   }
 
-  setAccelerating = (accelerating) => {
-    this._accelerating = accelerating;
+  setAccelerating(accelerating) {
+    this.accelerating = accelerating;
   }
 
-  setTurning = (turning) => {
-    this._turning = turning;
+  setTurning(turning) {
+    this.turning = turning;
   }
 
-  setData = (data) => {
-    this._physics.setState(data);
+  setData(data) {
+    this.physics.setState(data);
   }
 
-  setName = (name) => {
-    this._name = name;
+  setName(name) {
+    this.name = name;
   }
 
-  update = () => {
-    if(this._accelerating) {
-      this._physics.accel();
+  update() {
+    if(this.accelerating) {
+      this.physics.accel();
     }
-    if(this._turning) {
-      this._physics.turn(this._turning);
+    if(this.turning) {
+      this.physics.turn(this.turning);
     }
-    this._physics.update();
+    this.physics.update();
   }
 }

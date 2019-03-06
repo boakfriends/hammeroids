@@ -6,39 +6,39 @@ import {Sockets} from './sockets/sockets.js';
 export class GameState {
 
   constructor(canvas, sockets, name) {
-    this._canvasElement = canvas;
-    this._gameWidth = 1024;
-    this._gameHeight = 768;
-    this._objects = [];
-    this._networkObjects = [];
-    this._playerShip;
-    this._firing = false;
-    this._firingDelay = 100;
-    this._firingAllowed = true;
-    this._input = new Input(this);
-    this._sockets = sockets;
-    this._showDetail = false;
-    this._name = name;
+    this.canvasElement = canvas;
+    this.gameWidth = 1024;
+    this.gameHeight = 768;
+    this.objects = [];
+    this.networkObjects = [];
+    this.playerShip;
+    this.firing = false;
+    this.firingDelay = 100;
+    this.firingAllowed = true;
+    this.input = new Input(this);
+    this.sockets = sockets;
+    this.isShowDetail = false;
+    this.name = name;
   }
 
-  addListeners = (addListener) => {
+  addListeners(addListener) {
     const events = ['keydown', 'keyup']
     for (let ev of events) {
-      addListener(ev, this._input[ev], false);
+      addListener(ev, this.input[ev], false);
     }
   }
 
-  newPlayerShip = () => {
-    this._playerShip = new Ship(this._gameWidth / 2, this._gameHeight / 2);
-    this._playerShip.setName(this._name);
+  newPlayerShip() {
+    this.playerShip = new Ship(this.gameWidth / 2, this.gameHeight / 2);
+    this.playerShip.setName(this.name);
   };
 
-  setHeight = (height) => {
-    this._gameHeight = height;
+  setHeight(height) {
+    this.gameHeight = height;
   };
 
-  setWidth = (width) => {
-    this._gameWidth = width;
+  setWidth(width) {
+    this.gameWidth = width;
   };
 
   update = () => {
@@ -47,58 +47,58 @@ export class GameState {
     this.updateNetworkState();
   };
 
-  updateFiring = () => {
-    if(this._firing && this._firingAllowed) {
-      const shipState = this._playerShip.getState();
+  updateFiring() {
+    if(this.firing && this.firingAllowed) {
+      const shipState = this.playerShip.getState();
       const slug = new Slug(shipState.position);
       this.addObject(slug);
-      this._sockets.fire(slug.getState());
-      this._firingAllowed = false;
-      setTimeout(() => this._firingAllowed = true, this._firingDelay);
+      this.sockets.fire(slug.getState());
+      this.firingAllowed = false;
+      setTimeout(() => this.firingAllowed = true, this.firingDelay);
     }
   }
 
-  getCanvasElement = () => {
-    return this._canvasElement;
+  getCanvasElement() {
+    return this.canvasElement;
   };
 
-  getWidth = () => {
-    return this._gameWidth;
+  getWidth() {
+    return this.gameWidth;
   };
 
-  getHeight = () => {
-    return this._gameHeight;
+  getHeight() {
+    return this.gameHeight;
   };
 
-  getObjects = () => {
+  getObjects() {
     const gameObjects = [];
-    this._objects.forEach((obj) => gameObjects.push(obj));
-    if(this._playerShip) {
-      gameObjects.push(this._playerShip);
+    this.objects.forEach((obj) => gameObjects.push(obj));
+    if(this.playerShip) {
+      gameObjects.push(this.playerShip);
     }
-    this._networkObjects.forEach((obj) => gameObjects.push(obj));
+    this.networkObjects.forEach((obj) => gameObjects.push(obj));
     return gameObjects;
   };
 
-  addObject = (object) => {
-    this._objects.push(object);
+  addObject(object) {
+    this.objects.push(object);
   };
 
-  removeObjects = (predicate) => {
-    this._objects = this._objects.filter(function(obj) {return !predicate(obj)});
+  removeObjects(predicate) {
+    this.objects = this.objects.filter(function(obj) {return !predicate(obj)});
   };
 
-  updateNetworkState = () => {
-    this._sockets.updatePlayerShipState(this._playerShip.getState(), this._name);
+  updateNetworkState() {
+    this.sockets.updatePlayerShipState(this.playerShip.getState(), this.name);
     this.updateNetworkObjects();
   }
 
-  updateNetworkObjects = () => {
-    this._networkObjects = this._sockets.getNetworkObjects();
+  updateNetworkObjects() {
+    this.networkObjects = this.sockets.getNetworkObjects();
   }
 
-  showDetail = () => {
-    return this._showDetail;
+  showDetail() {
+    return this.isShowDetail;
   }
 
 

@@ -46,7 +46,7 @@ describe('Ship', function() {
       ship.update();
 
       // Then
-      assert.equal(ship.getState().position.angle, ship._physics._turnRate * ship._physics._friction);
+      assert.equal(ship.getState().position.angle, ship.physics.turnRate * ship.physics.friction);
     });
   });
   

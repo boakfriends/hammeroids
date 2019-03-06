@@ -6,31 +6,31 @@ export class Slug {
     const SLUG_SPEED = 6,
       xMomentum = Physics.getCosOfDegrees(position.angle + 90),
       yMomentum = Physics.getCosOfDegrees(position.angle);
-    this._physics = new Physics(1, 3, 1, position.x, position.y, position.angle, xMomentum * SLUG_SPEED, yMomentum * SLUG_SPEED);
-    this._slugCoords = [[0,4],[0,-4]];
+    this.physics = new Physics(1, 3, 1, position.x, position.y, position.angle, xMomentum * SLUG_SPEED, yMomentum * SLUG_SPEED);
+    this.slugCoords = [[0,4],[0,-4]];
   }
 
-  getDrawer = () => {
+  getDrawer() {
     const newCoords = [];
-    for(let coord in this._slugCoords) {
-      newCoords.push(this._physics.getTransform(this._slugCoords[coord][0], this._slugCoords[coord][1]));
+    for(let coord in this.slugCoords) {
+      newCoords.push(this.physics.getTransform(this.slugCoords[coord][0], this.slugCoords[coord][1]));
     }
     return new PathDrawer('rgb(255,255,255)', 4, newCoords);
   }
 
-  getDetail = () => {
+  getDetail() {
     return {draw: () => {}}
   }
 
-  update = () => {
-    this._physics.update();
+  update() {
+    this.physics.update();
   }
 
-  getState = () => {
-    return this._physics.getState();
+  getState() {
+    return this.physics.getState();
   }
 
-  setState = (state) => {
-    this._physics.setState(state);
+  setState(state) {
+    this.physics.setState(state);
   }
 }

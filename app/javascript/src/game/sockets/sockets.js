@@ -8,10 +8,9 @@ export class Sockets {
     this._networkObjects = {};
     this._ws = socket || new WebSocket(uri);
     this._ws.onmessage = this.onMessage;
-    this._ws.onopen = this.onOpen;
   }
 
-  setSocket = (socket) => {
+  setSocket(socket) {
     this._ws = socket;
     this._ws.onmessage = this.onMessage;
   }
@@ -32,19 +31,19 @@ export class Sockets {
     }
   };
 
-  fire = (slugState) => {
+  fire(slugState) {
     if(this._ws.readyState === 1 && this._id) {
       this._ws.send(JSON.stringify({'type': 'slug', 'slug': slugState}));
     }
   }
   
-  updatePlayerShipState = (ShipState, name) => {
+  updatePlayerShipState(ShipState, name) {
     if(this._ws.readyState === 1 && this._id) {
       this._ws.send(JSON.stringify({'type': 'update', 'name': name, 'id': this._id, 'data': ShipState}));
     }
   }
 
-  getNetworkObjects = () => {
+  getNetworkObjects() {
     const objArr = [];
     for(let id in this._networkObjects) {
       objArr.push(this._networkObjects[id]);
