@@ -22,10 +22,10 @@ module Hammeroids
       EventMachine.run do
 
         channel = EM::Channel.new
-        EventMachine::WebSocket.start(host: @socket_host, port: @socket_port) do |ws|
-          ws.onopen do |handshake|
-            id = Hammeroids::Connection.new(ws, channel).setup!
-            Hammeroids::Player.create(id, name: "Player #{id}")
+        EventMachine::WebSocket.start(host: @socket_host, port: @socket_port) do |connection|
+          connection.onopen do |handshake|
+            player = Hammeroids::Player.new(connection, channel)
+            player.join
           end
 
         end

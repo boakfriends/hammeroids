@@ -5,12 +5,16 @@ module Hammeroids
 
     def initialize; end
 
+    def add(player_json)
+      redis.lpush(LIST_KEY, player_json)
+    end
+
     def clear
       redis.del(LIST_KEY)
     end
 
     def to_h
-      { players: players }
+      { type: "lobby", payload: { players: JSON.parse(players, symbolize_names: true) } }
     end
 
     def to_json
