@@ -14,20 +14,20 @@ describe('Sockets', function() {
       socket.updatePlayerShipState({});
 
       // Then
-      assert(!socket._ws.send.called);
+      assert(!socket.ws.send.called);
     });
 
     it('Should call send on the socket if socket is ready', function() {
       // Given
       const hostname = "localhost";
       const socket = new Sockets(hostname, {send: sinon.spy(), readyState: 1});
-      socket._id = 1
+      socket.id = 1
 
       // When
       socket.updatePlayerShipState({});
 
       // Then
-      assert(socket._ws.send.called);
+      assert(socket.ws.send.called);
     });
   });
 });
