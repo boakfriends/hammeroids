@@ -7,10 +7,10 @@ describe('PathDrawer', function() {
   describe('#draw', function() {
     it('Should draw a line', function() {
       // Given
-      const style = '',
-        width = 2,
+      const style = 'white',
+        params = {'strokeStyle': style},
         coords = [[2,2], [1,1], [0,0]];
-      const pathDrawer = new PathDrawer(style, width, coords);
+      const pathDrawer = new PathDrawer(coords, params);
       const contextSpy = {beginPath: sinon.spy(), moveTo: sinon.spy(), lineTo: sinon.spy(), closePath: sinon.spy(), stroke: sinon.spy()}
       
       // When
@@ -18,7 +18,7 @@ describe('PathDrawer', function() {
 
       // Then
       assert(contextSpy.beginPath.calledOnce);
-      assert.equal(contextSpy.strokeStyle, style);
+      assert.equal(contextSpy.strokeStyle, 'white');
       assert(contextSpy.moveTo.calledOnce);
       assert.equal(contextSpy.lineTo.callCount, 2);
       assert(contextSpy.closePath.calledOnce);

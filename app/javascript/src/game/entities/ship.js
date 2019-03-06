@@ -13,8 +13,6 @@ export class Ship {
       [0, 2],
       [-7, 8]
     ];
-    this.strokeStyle = 'rgb(255,255,255)'
-    this.lineWidth = 2; 
     this.turning;
     this.accelerating = false;
     this.physics = new Physics(friction, turnRate, speed, x, y);
@@ -25,12 +23,24 @@ export class Ship {
     for(let coord in this.coords) {
       newCoords.push(this.physics.getTransform(this.coords[coord][0], this.coords[coord][1]));
     }
-    const xy = {x: this.physics.position.x, y: this.physics.position.y};
-    return new PathDrawer(this.strokeStyle, this.lineWidth, newCoords);
+    const params = {
+      'shadowColor': "white",
+      'shadowOffsetX': 0,
+      'shadowOffsetY': 0,
+      'shadowBlur': 5,
+      'strokeStyle': 'rgb(255,255,255)',
+      'lineWidth': 2
+    }
+    return new PathDrawer(newCoords, params);
   }
 
   getDetail() {
-    return new TextDrawer(this.physics.position.x, this.physics.position.y, this.name);
+    const params = {
+      'fillStyle': 'white',
+      'font': "10px Arial",
+      'textAlign': "center"
+    }
+    return new TextDrawer({'x': this.physics.position.x, 'y': this.physics.position.y, 'text': this.name}, params);
   }
 
   getState() {

@@ -15,8 +15,7 @@ export class View {
     this.context.fillRect(0, 0, this.gameWidth, this.gameHeight);
   };
 
-  drawGameObjects(func) {
-    const objects = this.gameState.getObjects();
+  updateObjectsWithFunctions = (objects, func) => {
     objects.forEach(func);
   };
 
@@ -32,9 +31,9 @@ export class View {
 
   update = () => {
     this.drawBackgroundRectangle();
-    this.drawGameObjects((object) => object.getDrawer().draw(this.context));
+    this.updateObjectsWithFunctions(this.gameState.getObjects(),(object) => object.getDrawer().draw(this.context));
     if(this.gameState.showDetail()) {
-      this.drawGameObjects((object) => object.getDetail().draw(this.context));
+      this.updateObjectsWithFunctions(this.gameState.getObjects(), (object) => object.getDetail().draw(this.context));
     }
   }
 }

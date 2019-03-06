@@ -1,14 +1,14 @@
-export class TextDrawer {
-  constructor(x, y, text = "playerShip") {
-    this.x = x;
-    this.y = y;
-    this.text = text;
+import {Drawer} from './drawer.js';
+
+export class TextDrawer extends Drawer {
+  constructor(data, params) {
+    super(params);
+    this.x = data.x;
+    this.y = data.y;
+    this.text = data.text;
   }
 
-  draw(context) {
-    context.fillStyle = 'white';
-    context.font = "10px Arial";
-    context.textAlign = "center";
+  _draw = (context) => {
     context.fillText(this.text, this.x, this.y + 20);
   }
 }
