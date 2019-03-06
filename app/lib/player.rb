@@ -14,6 +14,14 @@ module Hammeroids
       Hammeroids::Lobby.new.add(to_json)
     end
 
+    def leave
+      Hammeroids::Lobby.new.remove(to_json)
+    end
+
+    def subscription_id
+      @subscription_id ||= Hammeroids::Players::Subscription.new(@connection, @channel).create
+    end
+
     private
 
     def to_h
@@ -25,10 +33,6 @@ module Hammeroids
 
     def to_json
       to_h.to_json
-    end
-
-    def subscription_id
-      @subscription_id ||= Hammeroids::Players::Subscription.new(@connection, @channel).create
     end
   end
 end
