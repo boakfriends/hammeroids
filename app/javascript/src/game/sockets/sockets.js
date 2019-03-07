@@ -3,9 +3,7 @@ import {Ship} from '../entities/ship.js';
 import {Slug} from '../entities/slug.js';
 
 export class Sockets {
-  constructor(host, socket) {
-    const scheme = 'ws://',
-      uri = scheme + host + ':8080' + '/game';
+  constructor(uri, socket) {
     this.networkObjects = {};
     this.ws = socket || new WebSocket(uri);
     this.ws.onmessage = this.onMessage;

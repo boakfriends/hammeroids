@@ -28,6 +28,11 @@ RSpec.describe "Hammeroids::App", type: :request do
         post path, params
         expect(last_response.body).to include name
       end
+
+      it "contains the socket base URL" do
+        post path, params
+        expect(last_response.body).to include Hammeroids::Settings.base_socket_url
+      end
     end
   end
 end
