@@ -9,9 +9,10 @@ Bundler.require(:default, ENV['RACK_ENV'].to_sym)
 module Hammeroids
   # Launches EM loop with embedded web application.
   class Launcher
-    def initialize(socket_port: ENV.fetch("SOCKET_PORT"), socket_host: "0.0.0.0", web_host: "0.0.0.0", web_port: ENV.fetch("WEB_PORT"))
+    def initialize(socket_port: ENV.fetch("SOCKET_PORT"), socket_host: "0.0.0.0", socket_secure: false, web_host: "0.0.0.0", web_port: ENV.fetch("WEB_PORT"))
       @socket_port = socket_port
       @socket_host = socket_host
+      @socket_secure = socket_secure
       @web_host = web_host
       @web_port = web_port
     end
@@ -22,7 +23,7 @@ module Hammeroids
       EventMachine.run do
 
         channel = EM::Channel.new
-        EventMachine::WebSocket.start(host: @socket_host, port: @socket_port) do |connection|
+        EventMachine::WebSocket.start(host: @socket_host, port: @socket_port, secure: @socket_secure) do |connection|
           player = Hammeroids::Player.new(connection, channel)
           connection.onopen do |handshake|
             player.join
@@ -69,7 +70,6 @@ module Hammeroids
     set :views, File.join(File.dirname(__FILE__), 'views')
     set :public_folder, File.dirname(__FILE__) + '/assets'
     set :static, true
-    set :pack_location, Webpack.pack_location
 
     configure :development do
       require 'dotenv/load'
