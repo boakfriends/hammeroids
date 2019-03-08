@@ -9,6 +9,10 @@ module Hammeroids
       redis.lpush(LIST_KEY, player_json)
     end
 
+    def remove(player_json)
+      redis.lrem(LIST_KEY, 0, player_json)
+    end
+
     def clear
       redis.del(LIST_KEY)
     end
