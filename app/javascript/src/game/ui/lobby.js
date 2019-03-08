@@ -6,13 +6,15 @@ export class Lobby {
   }
 
   update () {
-    this.clearParent();
-    this.players.forEach((player) => {
-      const div = document.createElement("div");
-      const text = document.createTextNode(`${player.name} (${player.id})`);
-      div.appendChild(text);
-      this.parentElement.appendChild(div)
-    })
+    if(this.parentElement) {
+      this.clearParent();
+      this.players.forEach((player) => {
+        const div = document.createElement("div");
+        const text = document.createTextNode(`${player.name} (${player.id})`);
+        div.appendChild(text);
+        this.parentElement.appendChild(div)
+      });
+    }
   }
 
   clearParent () {
