@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start:dev": "webpack-dev-server",
-    "test": "mocha --recursive --require @babel/register",
+    "test": "nyc --reporter=html mocha --recursive --require @babel/register",
     "test:creator": "mocha -g 'Creator' --recursive --require @babel/register"
   },
   "repository": {
@@ -43,6 +43,7 @@
     "jasmine": "3.0.0",
     "mocha": "^6.0.0",
     "mocha-jsdom": "^2.0.0",
+    "nyc": "^13.3.0",
     "sinon": "^7.2.4",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3",
