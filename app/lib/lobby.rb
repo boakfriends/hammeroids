@@ -36,7 +36,7 @@ module Hammeroids
     end
 
     def to_h
-      { "type": self.class.name.downcase, "payload": { "players": players } }
+      { "type": "lobby", "payload": { "players": players } }
     end
   end
 end
