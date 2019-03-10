@@ -27,7 +27,7 @@ describe('Ship', function() {
 
       // When
       ship.setAccelerating(true);
-      ship.update();
+      ship.update(0);
 
       // Then
       assert.equal(ship.getState().position.x, x + Physics.getCosOfDegrees(90));
@@ -43,7 +43,7 @@ describe('Ship', function() {
 
       // When
       ship.setTurning((angularMomentum, turnRate) => angularMomentum + turnRate);
-      ship.update();
+      ship.update(1);
 
       // Then
       assert.equal(ship.getState().position.angle, ship.physics.turnRate * ship.physics.friction);

@@ -8,15 +8,15 @@ export class Physics {
   }
 
   accel() {
-    const xMomentumAddition = Physics.getCosOfDegrees(this.position.angle + 90),
-      yMomentumAddition = Physics.getCosOfDegrees(this.position.angle);
+    const xMomentumAddition = (Physics.getCosOfDegrees(this.position.angle + 90)) / 10,
+      yMomentumAddition = (Physics.getCosOfDegrees(this.position.angle)) / 10;
     this.momentum.xMomentum += xMomentumAddition * this.speed;
     this.momentum.yMomentum += yMomentumAddition * this.speed;
   }
 
-  update() {
+  update(delta) {
     this.updateMomentum();
-    this.updatePosition();
+    this.updatePosition(delta);
   }
 
   updateMomentum() {
@@ -25,10 +25,10 @@ export class Physics {
     }
   }
 
-  updatePosition() {
-    this.position.x += this.momentum.xMomentum;
-    this.position.y += this.momentum.yMomentum;
-    this.position.angle = (this.momentum.angularMomentum + this.position.angle) % 360;
+  updatePosition(delta) {
+    this.position.x += this.momentum.xMomentum * delta;
+    this.position.y += this.momentum.yMomentum * delta;
+    this.position.angle = ((this.momentum.angularMomentum * delta) + this.position.angle) % 360;
   }
 
   turn(momentumFunction) {
