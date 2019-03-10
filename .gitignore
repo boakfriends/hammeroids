@@ -2,6 +2,8 @@ node_modules
 .idea
 .DS_Store
 .byebug_history
+.nyc_output
+coverage
 
 # development environment variables
 .env
