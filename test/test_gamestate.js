@@ -10,6 +10,13 @@ describe('GameState', function() {
     it('Should return player ship in the list of game objects when a new player ship is added', function() {
       // Given
       const gameState = new GameState(mockCanvas());
+      global.document = {
+        getElementById: function() {
+          return {
+            innerText: 'name'
+          }
+        }
+      }
 
       // When
       gameState.newPlayerShip();
@@ -18,6 +25,7 @@ describe('GameState', function() {
       // Then
       assert.equal(objects.length, 1);
       assert(objects[0] instanceof Ship);
+      assert.equal(objects[0].name, 'name');
     })
   });
 

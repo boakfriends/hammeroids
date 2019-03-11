@@ -6,8 +6,8 @@ import {DustParticle} from './entities/dustparticle.js';
 
 export class GameState {
 
-  constructor(canvas, sockets, name) {
-    this.canvasElement = canvas;
+  constructor(sockets) {
+    this._canvasElement;
     this.gameWidth = 1024;
     this.gameHeight = 768;
     this.objects = [];
@@ -19,7 +19,7 @@ export class GameState {
     this.input = new Input(this);
     this.sockets = sockets;
     this.isShowDetail = false;
-    this.name = name;
+    this._name;
     this.spaceDust = [];
     this.makeDust();
   }
@@ -67,10 +67,6 @@ export class GameState {
     }
   }
 
-  getCanvasElement() {
-    return this.canvasElement;
-  };
-
   getWidth() {
     return this.gameWidth;
   };
@@ -108,6 +104,16 @@ export class GameState {
 
   showDetail() {
     return this.isShowDetail;
+  }
+
+  get canvasElement() {
+    this._canvasElement = this._canvasElement || document.getElementById('canvas');
+    return this._canvasElement;
+  }
+
+  get name() {
+    this._name = this._name || document.getElementById('name').innerText;
+    return this._name;
   }
 
 
