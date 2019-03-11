@@ -16,9 +16,8 @@ import {Camera} from './game/camera/camera.js';
 
 document.addEventListener("DOMContentLoaded",function() {
   const settings = new Settings()
-  const canvasElement = document.getElementById('canvas')
   const sockets = new Sockets(settings.baseSocketUrl);
-  const gameState = new GameState(canvasElement, sockets, document.getElementById('name').innerText);
+  const gameState = new GameState(sockets);
   gameState.newPlayerShip();
   gameState.addListeners(window.addEventListener);
   const camera = new Camera(gameState);

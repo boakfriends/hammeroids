@@ -2,7 +2,7 @@ export class View {
 
   constructor(gameState, camera) {
     this.gameState = gameState;
-    this.canvasElement = gameState.getCanvasElement();
+    this.canvasElement = gameState.canvasElement;
     this.context = this.canvasElement.getContext('2d');
     this.gameWidth = this.gameState.getWidth();
     this.gameHeight = this.gameState.getHeight();
