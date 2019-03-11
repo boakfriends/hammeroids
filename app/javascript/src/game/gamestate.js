@@ -1,33 +1,21 @@
 import {Ship} from './entities/ship.js';
 import {Input} from './input/input.js';
 import {Slug} from './entities/slug.js';
-import {Sockets} from './sockets/sockets.js';
-import {DustParticle} from './entities/dustparticle.js';
 
 export class GameState {
 
-  constructor(sockets) {
+  constructor(sockets, model) {
     this._canvasElement;
+    this._name;
     this.gameWidth = 1024;
     this.gameHeight = 768;
-    this.objects = [];
-    this.networkObjects = [];
-    this.playerShip;
     this.firing = false;
     this.firingDelay = 100;
     this.firingAllowed = true;
-    this.input = new Input(this);
     this.sockets = sockets;
     this.isShowDetail = false;
-    this._name;
-    this.spaceDust = [];
-    this.makeDust();
-  }
-
-  makeDust = () => {
-    Array.from(Array(100).keys()).forEach(() => {
-      this.spaceDust.push(new DustParticle());
-    })
+    this.model = model;
+    this.input = new Input(this);
   }
 
   addListeners(addListener) {
@@ -38,8 +26,8 @@ export class GameState {
   }
 
   newPlayerShip() {
-    this.playerShip = new Ship(this.gameWidth / 2, this.gameHeight / 2);
-    this.playerShip.setName(this.name);
+    this.model.playerShip = new Ship(this.gameWidth / 2, this.gameHeight / 2);
+    this.model.playerShip.setName(this.name)
   };
 
   setHeight(height) {
@@ -51,16 +39,15 @@ export class GameState {
   };
 
   update = () => {
-    this.getObjects().forEach((object) => object.update());
+    this.model.gameObjects.forEach((object) => object.update());
     this.updateFiring();
-    this.updateNetworkState();
+    this.sockets.updatePlayerShipState(this.model.playerShip.getState(), this.name);
   };
 
   updateFiring() {
     if(this.firing && this.firingAllowed) {
-      const shipState = this.playerShip.getState();
-      const slug = new Slug(shipState.position);
-      this.addObject(slug);
+      const shipState = this.model.playerShip.getState();
+      const slug = new Slug(shipState.position, this.model);
       this.sockets.fire(slug.getState());
       this.firingAllowed = false;
       setTimeout(() => this.firingAllowed = true, this.firingDelay);
@@ -75,33 +62,6 @@ export class GameState {
     return this.gameHeight;
   };
 
-  getObjects() {
-    const gameObjects = [];
-    this.objects.forEach((obj) => gameObjects.push(obj));
-    if(this.playerShip) {
-      gameObjects.push(this.playerShip);
-    }
-    this.networkObjects.forEach((obj) => gameObjects.push(obj));
-    return gameObjects;
-  };
-
-  addObject(object) {
-    this.objects.push(object);
-  };
-
-  removeObjects(predicate) {
-    this.objects = this.objects.filter(function(obj) {return !predicate(obj)});
-  };
-
-  updateNetworkState() {
-    this.sockets.updatePlayerShipState(this.playerShip.getState(), this.name);
-    this.updateNetworkObjects();
-  }
-
-  updateNetworkObjects() {
-    this.networkObjects = this.sockets.getNetworkObjects();
-  }
-
   showDetail() {
     return this.isShowDetail;
   }
@@ -114,6 +74,15 @@ export class GameState {
   get name() {
     this._name = this._name || document.getElementById('name').innerText;
     return this._name;
+  }
+
+  get playAreaDimensions() {
+    return {
+      width: this.gameWidth,
+      height: this.gameHeight,
+      widthMid: this.gameWidth / 2,
+      heightMid: this.gameHeight / 2
+    }
   }
 
 

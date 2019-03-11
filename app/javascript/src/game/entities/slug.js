@@ -2,12 +2,16 @@ import {Physics} from '../physics/physics.js'
 import {PathDrawer} from '../drawing/pathdrawer.js';
 
 export class Slug {
-  constructor(position) {
+  constructor(position, model) {
     const SLUG_SPEED = 6,
       xMomentum = Physics.getCosOfDegrees(position.angle + 90),
       yMomentum = Physics.getCosOfDegrees(position.angle);
     this.physics = new Physics(1, 3, 1, position.x, position.y, position.angle, xMomentum * SLUG_SPEED, yMomentum * SLUG_SPEED);
     this.slugCoords = [[0,4],[0,-4]];
+    model.addGameObject(this);
+    setInterval(() => {
+      model.removeGameObject(this);
+    }, 1000);
   }
 
   getDrawer() {

@@ -13,11 +13,13 @@ import {Settings} from'./settings';
 import {Ship} from'./game/entities/ship';
 import {Sockets} from './game/sockets/sockets.js';
 import {Camera} from './game/camera/camera.js';
+import {Model} from './game/model/model.js';
 
 document.addEventListener("DOMContentLoaded",function() {
   const settings = new Settings()
-  const sockets = new Sockets(settings.baseSocketUrl);
-  const gameState = new GameState(sockets);
+  const model = new Model();
+  const sockets = new Sockets(model, settings.baseSocketUrl);
+  const gameState = new GameState(sockets, model);
   gameState.newPlayerShip();
   gameState.addListeners(window.addEventListener);
   const camera = new Camera(gameState);

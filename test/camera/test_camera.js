@@ -35,7 +35,7 @@ describe('Camera', function() {
       assert(contextMock.translate.called);
       assert.equal(camera.x, 289);
       assert.equal(camera.y, 217);
-      assert(gameStateMock.spaceDust[0].update.called);
+      assert(gameStateMock.model.spaceDust[0].update.called);
     });
   });
 
@@ -61,19 +61,25 @@ describe('Camera', function() {
 // Helper function for creating mock gamestate
 const mockGameState = function(gameWidth, gameHeight, x, y, dustParticle = {update: sinon.spy()}) {
   return {
-    playerShip: {
-      getState: function() {
-        return {
-          position: {
-            x: x,
-            y: y
-          }
-        };
-      }
+    model: {
+      playerShip: {
+        getState: function() {
+          return {
+            position: {
+              x: x,
+              y: y
+            }
+          };
+        }
+      }, 
+      spaceDust: [dustParticle],
     },
-    gameWidth: gameWidth,
-    gameHeight: gameHeight,
-    spaceDust: [dustParticle]
+    playAreaDimensions: {
+      gameWidth: gameWidth,
+      gameHeight: gameHeight,
+      widthMid: gameWidth / 2,
+      heightMid: gameHeight / 2
+    }
   };
 }
 

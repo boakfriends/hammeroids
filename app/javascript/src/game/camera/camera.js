@@ -2,35 +2,36 @@ import {Delta} from './delta.js';
 
 export class Camera {
   constructor(gameState) {
-    this.gameState = gameState;
-    this.x = this.gameState.gameWidth / 2;
-    this.y = this.gameState.gameHeight / 2;
+    this.model = gameState.model;
+    this.playAreaDimensions = gameState.playAreaDimensions;
+    this.x = this.playAreaDimensions.widthMid;
+    this.y = this.playAreaDimensions.heightMid;
   }
 
   update(context) {
-    const shipPosition = this.gameState.playerShip.getState().position;
+    const shipPosition = this.model.playerShip.getState().position;
     this.delta = new Delta(shipPosition, this);
     this.updateSpaceDust();
     this.x += this.delta.x;
     this.y += this.delta.y;
-    const translateX = this.gameState.gameWidth / 2 - this.x;
-    const translateY = this.gameState.gameHeight / 2 - this.y;
+    const translateX = this.playAreaDimensions.widthMid - this.x;
+    const translateY = this.playAreaDimensions.heightMid - this.y;
     context.translate(translateX, translateY);
   }
 
   updateSpaceDust() {
-    this.gameState.spaceDust.forEach((dust) => dust.update(this.getBounds(), this.delta));
+    this.model.spaceDust.forEach((dust) => dust.update(this.getBounds(), this.delta));
   }
 
   getBounds() {
     return [
       {
-        x: this.x - this.gameState.gameWidth / 2,
-        y: this.y - this.gameState.gameHeight / 2
+        x: this.x - this.playAreaDimensions.widthMid,
+        y: this.y - this.playAreaDimensions.heightMid
       },
       {
-        x: this.x + this.gameState.gameWidth / 2,
-        y: this.y + this.gameState.gameHeight / 2
+        x: this.x + this.playAreaDimensions.widthMid,
+        y: this.y + this.playAreaDimensions.heightMid
       }
     ]
   }

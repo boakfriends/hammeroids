@@ -8,7 +8,8 @@ describe('Sockets', function() {
     it('Should not send a message to the Socket if socket is not ready', function() {
       // Given
       const hostname = "localhost";
-      const socket = new Sockets(hostname, {send: sinon.spy()});
+      const model = {};
+      const socket = new Sockets(model, hostname, {send: sinon.spy()});
 
       // When
       socket.updatePlayerShipState({});
@@ -20,7 +21,8 @@ describe('Sockets', function() {
     it('Should call send on the socket if socket is ready', function() {
       // Given
       const hostname = "localhost";
-      const socket = new Sockets(hostname, {send: sinon.spy(), readyState: 1});
+      const model = {};
+      const socket = new Sockets(model, hostname, {send: sinon.spy(), readyState: 1});
       socket.id = 1
 
       // When

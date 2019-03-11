@@ -27,4 +27,12 @@ export class DustParticle {
       {'key': 'fillStyle', 'value': 'rgba(226,219,226,' + this.opacity +')'}
     ]);
   }
+  
+  static makeDust() {
+    const spaceDustArray = [];
+    Array.from(Array(100).keys()).forEach(() => {
+      spaceDustArray.push(new DustParticle());
+    });
+    return spaceDustArray;
+  }
 }

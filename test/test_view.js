@@ -66,18 +66,20 @@ function getMockCanvas() {
 
 function getMockWithObjects(canvasSpy, objects) {
   const gameState = getMockGameState(canvasSpy);
-  gameState.getObjects = function() {
-    return objects;
-  };
+  gameState.model = {
+    drawableObjects: objects
+  }
   return gameState;
 }
 
 function getMockGameState(canvasSpy, width = 100, height = 200) {
   return {
-    getCanvasElement: function() {return canvasSpy;},
+    canvasElement: canvasSpy,
     getWidth: function() {return width;},
     getHeight: function() {return height},
-    getObjects: function() {return []},
+    model: {
+      drawableObjects: []
+    },
     showDetail: function() {return false},
     spaceDust: []
   };

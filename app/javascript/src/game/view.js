@@ -2,6 +2,7 @@ export class View {
 
   constructor(gameState, camera) {
     this.gameState = gameState;
+    this.model = gameState.model;
     this.canvasElement = gameState.canvasElement;
     this.context = this.canvasElement.getContext('2d');
     this.gameWidth = this.gameState.getWidth();
@@ -34,10 +35,9 @@ export class View {
     this.context.setTransform(1,0,0,1,0,0);
     this.drawBackgroundRectangle();
     this.camera.update(this.context);
-    this.updateObjectsWithFunctions(this.gameState.spaceDust, (object) => object.getDrawer().draw(this.context));
-    this.updateObjectsWithFunctions(this.gameState.getObjects(),(object) => object.getDrawer().draw(this.context));
+    this.updateObjectsWithFunctions(this.model.drawableObjects, (object) => object.getDrawer().draw(this.context));
     if(this.gameState.showDetail()) {
-      this.updateObjectsWithFunctions(this.gameState.getObjects(), (object) => object.getDetail().draw(this.context));
+      this.updateObjectsWithFunctions(this.model.drawableObjects, (object) => object.getDetail().draw(this.context));
     }
   }
 }
