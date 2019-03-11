@@ -11,7 +11,7 @@ describe('View', function() {
       const height = Math.ceil(Math.random() * 500);
       const canvasSpy = getMockCanvas();
       const gameState = getMockGameState(canvasSpy, width, height);
-      const view = new View(gameState);
+      const view = new View(gameState, {update: sinon.spy()});
 
       // When
       view.update();
@@ -27,7 +27,7 @@ describe('View', function() {
       const height = Math.ceil(Math.random() * 500);
       const canvasSpy = getMockCanvas();
       const gameState = getMockGameState(canvasSpy, width, height);
-      const view = new View(gameState);
+      const view = new View(gameState, {update: sinon.spy()});
 
       // When
       view.update();
@@ -44,7 +44,7 @@ describe('View', function() {
       const drawer = {draw: sinon.spy()};
       objects.push({getDrawer: function() {return drawer;}});
       const gameState = getMockWithObjects(canvasSpy, objects);
-      const view = new View(gameState);
+      const view = new View(gameState, {update: sinon.spy()});
 
       // When 
       view.update();
@@ -56,7 +56,7 @@ describe('View', function() {
 });
 
 function getMockCanvas() {
-  const context = {fillRect: sinon.spy(), clearRect: sinon.spy()};
+  const context = {fillRect: sinon.spy(), clearRect: sinon.spy(), setTransform: sinon.spy()};
   return {
     getContext: function() {
       return context;
@@ -78,6 +78,7 @@ function getMockGameState(canvasSpy, width = 100, height = 200) {
     getWidth: function() {return width;},
     getHeight: function() {return height},
     getObjects: function() {return []},
-    showDetail: function() {return false}
+    showDetail: function() {return false},
+    spaceDust: []
   };
 }

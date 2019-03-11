@@ -2,6 +2,7 @@ import {Ship} from './entities/ship.js';
 import {Input} from './input/input.js';
 import {Slug} from './entities/slug.js';
 import {Sockets} from './sockets/sockets.js';
+import {DustParticle} from './entities/dustparticle.js';
 
 export class GameState {
 
@@ -19,6 +20,14 @@ export class GameState {
     this.sockets = sockets;
     this.isShowDetail = false;
     this.name = name;
+    this.spaceDust = [];
+    this.makeDust();
+  }
+
+  makeDust = () => {
+    Array.from(Array(100).keys()).forEach(() => {
+      this.spaceDust.push(new DustParticle());
+    })
   }
 
   addListeners(addListener) {
