@@ -6,14 +6,16 @@ export class Input {
       37: () => this.gameState.playerShip.setTurning((momentum, acceleration) => momentum - acceleration),
       39: () => this.gameState.playerShip.setTurning((momentum, acceleration) => momentum + acceleration),
       18: () => this.gameState.firing = true,
-      90: () => this.gameState.isShowDetail = true
+      90: () => this.gameState.isShowDetail = true,
+      81: () => this.gameState.spawningAsteroid = true
     };
     this.functionMapUp = {
       38: () => this.gameState.playerShip.setAccelerating(false),
       37: () => this.gameState.playerShip.setTurning(undefined),
       39: () => this.gameState.playerShip.setTurning(undefined),
       18: () => this.gameState.firing = false,
-      90: () => this.gameState.isShowDetail = false
+      90: () => this.gameState.isShowDetail = false,
+      81: () => this.gameState.spawningAsteroid = false
     };
   }
 
@@ -32,4 +34,5 @@ export class Input {
   keyup = (e) => {
     this.runFunction(e, this.functionMapUp); 
   }
+
 }

@@ -3,6 +3,7 @@ import {Input} from './input/input.js';
 import {Slug} from './entities/slug.js';
 import {Sockets} from './sockets/sockets.js';
 import {DustParticle} from './entities/dustparticle.js';
+import {Asteroid} from './entities/asteroid.js';
 
 export class GameState {
 
@@ -22,12 +23,24 @@ export class GameState {
     this.name = name;
     this.spaceDust = [];
     this.makeDust();
+    this.spawningAsteroid = false;
+    this.spawningAsteroidAllowed = true;
   }
 
   makeDust = () => {
     Array.from(Array(100).keys()).forEach(() => {
       this.spaceDust.push(new DustParticle());
     })
+  }
+
+  updateAsteroids() {
+    if(this.spawningAsteroid && this.spawningAsteroidAllowed) {
+      let asteroid = new Asteroid();
+      asteroid.initialise();
+      this.objects.push(asteroid);
+      this.spawningAsteroidAllowed = false;
+      setTimeout(() => this.spawningAsteroidAllowed = true, this.firingDelay);
+    }
   }
 
   addListeners(addListener) {
@@ -54,6 +67,7 @@ export class GameState {
     this.getObjects().forEach((object) => object.update());
     this.updateFiring();
     this.updateNetworkState();
+    this.updateAsteroids();
   };
 
   updateFiring() {

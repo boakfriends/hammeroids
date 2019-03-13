@@ -4,7 +4,9 @@ export class Drawer {
   }
 
   draw(context) {
+    context.save();
     Object.keys(this.params).forEach((key) => context[key] = this.params[key]);
     (this._draw || (() => {}))(context);
+    context.restore();
   }
 }
