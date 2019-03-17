@@ -1,3 +1,5 @@
+import {TextDrawer} from './drawing/textdrawer.js';
+
 export class View {
 
   constructor(gameState, camera) {
@@ -25,6 +27,20 @@ export class View {
     this.canvasElement.height = this.gameHeight;
   }
 
+  showFrameRate(framerate) {
+    const params = {
+      fillStyle: 'white',
+      font: "10px Arial",
+      textAlign: "left"
+    };
+    const drawer = new TextDrawer({
+      x: this.camera.getBounds()[0].x + 20,
+      y: this.camera.getBounds()[0].y + 10,
+      text: `Framerate: ${framerate}`
+    }, params);
+    drawer.draw(this.context);
+  }
+
   /*
   * Calls to this method update the rendering of the game.
   * gameState provides the state to render
@@ -37,6 +53,7 @@ export class View {
     this.updateObjectsWithFunctions(this.gameState.spaceDust, (object) => object.getDrawer().draw(this.context));
     this.updateObjectsWithFunctions(this.gameState.getObjects(),(object) => object.getDrawer().draw(this.context));
     if(this.gameState.showDetail()) {
+      this.showFrameRate(Math.round(this.gameState.frameRate, 2));
       this.updateObjectsWithFunctions(this.gameState.getObjects(), (object) => object.getDetail().draw(this.context));
     }
   }

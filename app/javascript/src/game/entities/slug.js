@@ -3,7 +3,7 @@ import {PathDrawer} from '../drawing/pathdrawer.js';
 
 export class Slug {
   constructor(position) {
-    const SLUG_SPEED = 6,
+    const SLUG_SPEED = 7,
       xMomentum = Physics.getCosOfDegrees(position.angle + 90),
       yMomentum = Physics.getCosOfDegrees(position.angle);
     this.physics = new Physics(1, 3, 1, position.x, position.y, position.angle, xMomentum * SLUG_SPEED, yMomentum * SLUG_SPEED);
@@ -26,8 +26,8 @@ export class Slug {
     return {draw: () => {}}
   }
 
-  update() {
-    this.physics.update();
+  update(delta) {
+    this.physics.update(delta);
   }
 
   getState() {

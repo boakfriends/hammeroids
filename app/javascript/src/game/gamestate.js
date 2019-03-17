@@ -3,6 +3,7 @@ import {Input} from './input/input.js';
 import {Slug} from './entities/slug.js';
 import {Sockets} from './sockets/sockets.js';
 import {DustParticle} from './entities/dustparticle.js';
+import {FrameRate} from'./gamestate/framerate.js';
 
 export class GameState {
 
@@ -22,6 +23,9 @@ export class GameState {
     this._name;
     this.spaceDust = [];
     this.makeDust();
+    this.lastFireTime = 0;
+    this.rechargeTime = 100;
+    this._frameRate = new FrameRate();
   }
 
   makeDust = () => {
@@ -50,20 +54,20 @@ export class GameState {
     this.gameWidth = width;
   };
 
-  update = () => {
-    this.getObjects().forEach((object) => object.update());
-    this.updateFiring();
+  update = (delta, timestamp) => {
+    this._frameRate.update(timestamp);
+    this.getObjects().forEach((object) => object.update(delta));
+    this.updateFiring(timestamp);
     this.updateNetworkState();
   };
 
-  updateFiring() {
-    if(this.firing && this.firingAllowed) {
+  updateFiring(timestamp) {
+    if(this.firing && timestamp - this.lastFireTime > this.rechargeTime) {
       const shipState = this.playerShip.getState();
       const slug = new Slug(shipState.position);
       this.addObject(slug);
       this.sockets.fire(slug.getState());
-      this.firingAllowed = false;
-      setTimeout(() => this.firingAllowed = true, this.firingDelay);
+      this.lastFireTime = timestamp;
     }
   }
 
@@ -114,6 +118,10 @@ export class GameState {
   get name() {
     this._name = this._name || document.getElementById('name').innerText;
     return this._name;
+  }
+  
+  get frameRate() {
+    return this._frameRate.frameRate;
   }
 
 

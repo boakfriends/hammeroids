@@ -5,7 +5,7 @@ import {TextDrawer} from '../drawing/textdrawer.js';
 export class Ship {
   constructor(x, y) {
     const friction = 0.98,
-      speed = 0.1,
+      speed = 1.2,
       turnRate = 0.2;
     this.coords = [
       [0, -10],
@@ -63,13 +63,13 @@ export class Ship {
     this.name = name;
   }
 
-  update() {
+  update(delta) {
     if(this.accelerating) {
       this.physics.accel();
     }
     if(this.turning) {
       this.physics.turn(this.turning);
     }
-    this.physics.update();
+    this.physics.update(delta);
   }
 }
