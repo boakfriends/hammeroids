@@ -1,5 +1,4 @@
-%w[require_all 
-   em-websocket thin redis sinatra].each { |library| require library }
+%w[require_all active_support/core_ext/hash/keys active_support/inflector em-websocket thin redis sinatra].each { |library| require library }
 ENV['RACK_ENV'] ||= 'development'
 require 'rubygems' unless defined?(Gem)
 require 'bundler/setup'
@@ -31,6 +30,7 @@ module Hammeroids
           end
 
           connection.onmessage do |message|
+            Hammeroids::Sockets::MessageRouter.new(connection, message).action
             channel.push(message)
           end
 

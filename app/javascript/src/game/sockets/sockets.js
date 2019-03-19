@@ -1,4 +1,5 @@
 import {MessageRouter} from './message_router.js';
+import {PlayerName} from './messages/player_name.js';
 import {Ship} from '../entities/ship.js';
 import {Slug} from '../entities/slug.js';
 
@@ -20,6 +21,8 @@ export class Sockets {
     const data = JSON.parse(event.data);
     if(data.type == 'welcome') {
       this.id = data.id;
+      const player_name = new PlayerName(this.ws);
+      player_name.update();
     } else if(data.type == 'update' && this.id != data.id) {
       if(!this.networkObjects[data.id]) {
         this.networkObjects[data.id] = new Ship(data.data.position.x, data.data.position.y);
