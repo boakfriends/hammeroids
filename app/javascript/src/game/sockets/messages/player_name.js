@@ -12,7 +12,7 @@ export class PlayerName {
   }
 
   get message() {
-    return { 'type': 'player_name', 'method': { 'name': 'update', 'args': { 'name': this.playerName } } };
+    return { 'type': 'player', 'attributes': { 'name': this.playerName } };
   }
 
   get playerName() {

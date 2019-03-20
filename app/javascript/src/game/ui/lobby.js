@@ -10,7 +10,7 @@ export class Lobby {
       this.clearParent();
       this.players.forEach((player) => {
         const div = document.createElement("div");
-        const text = document.createTextNode(`${player.name} (${player.id})`);
+        const text = document.createTextNode(player.name);
         div.appendChild(text);
         this.parentElement.appendChild(div)
       });

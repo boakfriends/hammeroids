@@ -17,27 +17,29 @@ module Hammeroids
     end
 
     def run
-      Hammeroids::Lobby.new.clear
-
       EventMachine.run do
 
         channel = EM::Channel.new
         EventMachine::WebSocket.start(host: @socket_host, port: @socket_port, secure: @socket_secure) do |connection|
-          player = Hammeroids::Player.new(connection, channel)
+          player = Hammeroids::Player.new
+
           connection.onopen do |handshake|
-            player.join
-            channel.push(Hammeroids::Lobby.new.to_json)
+            Hammeroids::Channels::Subscription.new(connection, channel).create
           end
 
           connection.onmessage do |message|
-            Hammeroids::Sockets::MessageRouter.new(connection, message).action
+            # TODO: refactor this once we have a better idea of all the events we'll be dealing with.
+            message_h = JSON.parse(message).deep_symbolize_keys
+            if message_h[:type] == "player"
+              player.update(message_h[:attributes])
+              Hammeroids::Channels::Lobby.new(channel).broadcast
+            end
             channel.push(message)
           end
 
           connection.onclose do
-            channel.unsubscribe(player.subscription_id)
-            player.leave
-            channel.push(Hammeroids::Lobby.new.to_json)
+            player.delete
+            Hammeroids::Channels::Lobby.new(channel).broadcast
           end
         end
 
