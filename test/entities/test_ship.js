@@ -1,5 +1,4 @@
 import {Ship} from '../../app/javascript/src/game/entities/ship.js';
-import {Physics} from '../../app/javascript/src/game/physics/physics.js';
 import {PathDrawer} from '../../app/javascript/src/game/drawing/pathdrawer.js';
 
 const assert = require('assert');
@@ -14,7 +13,8 @@ describe('Ship', function() {
         ship = new Ship(x, y);
 
       // Then
-      assert.equal(ship.getState().position.x, x);
+      assert.equal(ship.getPosition().x, x);
+      assert.equal(ship.getState().angle, 0);
     });
   });
 
@@ -27,10 +27,10 @@ describe('Ship', function() {
 
       // When
       ship.setAccelerating(true);
-      ship.update(0);
+      ship.update(1);
 
       // Then
-      assert.equal(ship.getState().position.x, x + Physics.getCosOfDegrees(90));
+      assert.equal(ship.accelerating, true);
     });
   });
 
@@ -42,11 +42,11 @@ describe('Ship', function() {
         ship = new Ship(x, y);
 
       // When
-      ship.setTurning((angularMomentum, turnRate) => angularMomentum + turnRate);
+      ship.setTurning('left');
       ship.update(1);
 
       // Then
-      assert.equal(ship.getState().position.angle, ship.physics.turnRate * ship.physics.friction);
+      assert.equal(ship.turning, 'left');
     });
   });
   

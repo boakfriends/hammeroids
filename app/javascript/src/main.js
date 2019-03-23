@@ -18,8 +18,6 @@ document.addEventListener("DOMContentLoaded",function() {
   const settings = new Settings()
   const sockets = new Sockets(settings.baseSocketUrl);
   const gameState = new GameState(sockets);
-  gameState.newPlayerShip();
-  gameState.addListeners(window.addEventListener);
   const camera = new Camera(gameState);
   const view = new View(gameState, camera);
   gameState.newPlayerShip();

@@ -41,8 +41,8 @@ describe('GameState', function() {
       gameState.setWidth(width);
 
       // Then
-      assert.equal(gameState.getHeight(), height);
-      assert.equal(gameState.getWidth(), width);
+      assert.equal(gameState.height, height);
+      assert.equal(gameState.width, width);
     })
   });
 

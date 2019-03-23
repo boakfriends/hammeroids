@@ -12,7 +12,7 @@ describe('TextDrawer', function() {
         params = {'strokeStyle': style},
         x = 10,
         y = 10,
-        textDrawer = new TextDrawer({'x': x, 'y': y, 'text': text}, params);
+        textDrawer = new TextDrawer({'x': x, 'y': y}, text, params);
       const contextSpy = {fillText: sinon.spy()}
 
       // When

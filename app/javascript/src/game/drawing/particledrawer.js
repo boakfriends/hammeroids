@@ -7,7 +7,7 @@ export class ParticleDrawer {
   draw = (context) => {
     this.params.forEach((param) => context[param.key] = param.value);
     context.beginPath();
-    context.arc(this.data.x, this.data.y, this.data.z * this.data.size, 0, Math.PI*2, true);
+    context.arc(this.data.position.x, this.data.position.y, this.data.z * this.data.size, 0, Math.PI*2, true);
     context.closePath();
     context.fill();
   }

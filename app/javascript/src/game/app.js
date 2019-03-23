@@ -14,7 +14,7 @@ export class App {
     this.lastFrameTimeMs = timestamp;
 
     while(this.delta >= this.timeStep) {
-      this.gameState.update(this.delta / 10, timestamp);
+      this.gameState.update(this.delta / this.timeStep, timestamp);
       this.delta -= this.timeStep;
     }
     this.view.update();

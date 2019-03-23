@@ -1,14 +1,13 @@
 import {Drawer} from './drawer.js';
 
 export class TextDrawer extends Drawer {
-  constructor(data, params) {
+  constructor(position, text, params) {
     super(params);
-    this.x = data.x;
-    this.y = data.y;
-    this.text = data.text;
+    this.position = position;
+    this.text = text;
   }
 
   _draw = (context) => {
-    context.fillText(this.text, this.x, this.y + 20);
+    context.fillText(this.text, this.position.x, this.position.y + 20);
   }
 }

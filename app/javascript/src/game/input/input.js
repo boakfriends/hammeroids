@@ -1,17 +1,18 @@
 export class Input {
-  constructor(gameState) {
+  constructor(gameState, playerController) {
     this.gameState = gameState;
+    this.playerController = playerController;
     this.functionMapDown = {
-      38: () => this.gameState.playerShip.setAccelerating(true),
-      37: () => this.gameState.playerShip.setTurning((momentum, acceleration) => momentum - acceleration),
-      39: () => this.gameState.playerShip.setTurning((momentum, acceleration) => momentum + acceleration),
+      38: () => this.playerController.accelerating = true,
+      37: () => this.playerController.turning = 'left',
+      39: () => this.playerController.turning = 'right',
       18: () => this.gameState.firing = true,
       90: () => this.gameState.isShowDetail = true
     };
     this.functionMapUp = {
-      38: () => this.gameState.playerShip.setAccelerating(false),
-      37: () => this.gameState.playerShip.setTurning(undefined),
-      39: () => this.gameState.playerShip.setTurning(undefined),
+      38: () => this.playerController.accelerating = false,
+      37: () => this.playerController.turning = undefined,
+      39: () => this.playerController.turning = undefined,
       18: () => this.gameState.firing = false,
       90: () => this.gameState.isShowDetail = false
     };

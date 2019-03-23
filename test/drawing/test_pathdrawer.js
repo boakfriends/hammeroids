@@ -1,4 +1,5 @@
-import {PathDrawer} from '../../app/javascript/src/game/drawing/pathdrawer.js';
+import { PathDrawer } from '../../app/javascript/src/game/drawing/pathdrawer.js';
+import { Vector } from '../../app/javascript/src/game/physics/Vector';
 
 const assert = require('assert');
 const sinon = require('sinon');
@@ -8,9 +9,14 @@ describe('PathDrawer', function() {
     it('Should draw a line', function() {
       // Given
       const style = 'white',
-        params = {'strokeStyle': style},
-        coords = [[2,2], [1,1], [0,0]];
-      const pathDrawer = new PathDrawer(coords, params);
+        params = {'strokeStyle': style};
+
+      const path = [
+        new Vector(2,2),
+        new Vector(1,1),
+        new Vector(0,0)
+      ];
+      const pathDrawer = new PathDrawer(path, params);
       const contextSpy = {beginPath: sinon.spy(), moveTo: sinon.spy(), lineTo: sinon.spy(), closePath: sinon.spy(), stroke: sinon.spy()}
       
       // When
