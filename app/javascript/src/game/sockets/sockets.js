@@ -31,7 +31,9 @@ export class Sockets {
       remoteShip.setData(data.data);
       remoteShip.setName(data.name);
     } else if(data.type == 'slug') {
-      this.networkObjects[JSON.stringify(data.slug)] = new Slug(data.slug.position, data.slug.angle);
+      const newSlug = new Slug(data.slug.state.position, data.slug.state.angle);
+      this.networkObjects[JSON.stringify(data.slug)] = newSlug;
+      newSlug.update(Date.now() - data.slug.timeStamp);
     }
   };
 

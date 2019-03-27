@@ -39,7 +39,10 @@ export class Slug {
   }
 
   getState() {
-    return this.physics.getState();
+    return {
+      state: this.physics.getState(),
+      timeStamp: Date.now()
+    };
   }
 
   setState(state) {
