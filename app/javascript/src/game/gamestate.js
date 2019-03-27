@@ -4,6 +4,8 @@ import {Slug} from './entities/slug.js';
 import {Sockets} from './sockets/sockets.js';
 import {DustParticle} from './entities/dustparticle.js';
 import {FrameRate} from'./gamestate/framerate.js';
+import {PlayerController} from './controller/playercontroller.js';
+import {Vector} from './physics/vector.js';
 
 export class GameState {
 
@@ -17,7 +19,8 @@ export class GameState {
     this.firing = false;
     this.firingDelay = 100;
     this.firingAllowed = true;
-    this.input = new Input(this);
+    this.playerController = new PlayerController(this);
+    this.input = new Input(this, this.playerController);
     this.sockets = sockets;
     this.isShowDetail = false;
     this._name;
@@ -56,6 +59,7 @@ export class GameState {
 
   update = (delta, timestamp) => {
     this._frameRate.update(timestamp);
+    this.playerController.update();
     this.getObjects().forEach((object) => object.update(delta));
     this.updateFiring(timestamp);
     this.updateNetworkState();
@@ -63,19 +67,19 @@ export class GameState {
 
   updateFiring(timestamp) {
     if(this.firing && timestamp - this.lastFireTime > this.rechargeTime) {
-      const shipState = this.playerShip.getState();
-      const slug = new Slug(shipState.position);
+      const shipState = this.playerShip.getState().position;
+      const slug = new Slug(shipState, this.playerShip.physics.angle);
       this.addObject(slug);
       this.sockets.fire(slug.getState());
       this.lastFireTime = timestamp;
     }
   }
 
-  getWidth() {
+  get width() {
     return this.gameWidth;
   };
 
-  getHeight() {
+  get height() {
     return this.gameHeight;
   };
 
@@ -122,6 +126,10 @@ export class GameState {
   
   get frameRate() {
     return this._frameRate.frameRate;
+  }
+
+  get centrePoint() {
+    return new Vector(this.width / 2, this.height / 2);
   }
 
 

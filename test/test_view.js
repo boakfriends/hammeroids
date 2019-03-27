@@ -1,4 +1,4 @@
-import {View} from '../app/javascript/src/game/view';
+import {View} from '../app/javascript/src/game/view.js';
 
 const assert = require('assert');
 const sinon = require('sinon');
@@ -75,8 +75,8 @@ function getMockWithObjects(canvasSpy, objects) {
 function getMockGameState(canvasSpy, width = 100, height = 200) {
   return {
     canvasElement: canvasSpy,
-    getWidth: function() {return width;},
-    getHeight: function() {return height},
+    width: width,
+    height: height,
     getObjects: function() {return []},
     showDetail: function() {return false},
     spaceDust: []

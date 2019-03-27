@@ -1,4 +1,5 @@
 import { Camera } from '../../app/javascript/src/game/camera/camera.js';
+import { Vector } from '../../app/javascript/src/game/physics/vector.js';
 
 const assert = require('assert');
 const sinon = require('sinon');
@@ -14,8 +15,8 @@ describe('Camera', function() {
       const camera = new Camera(gameStateMock);
 
       // Then
-      assert(camera.x, 320);
-      assert(camera.y, 240);
+      assert(camera.position.x, 320);
+      assert(camera.position.y, 240);
     });
   });
 
@@ -27,14 +28,14 @@ describe('Camera', function() {
       const camera = new Camera(gameStateMock);
 
       // When
-      assert.equal(camera.x, 320);
-      assert.equal(camera.y, 240);
+      assert.equal(camera.position.x, 320);
+      assert.equal(camera.position.y, 240);
       camera.update(contextMock);
 
       // Then
       assert(contextMock.translate.called);
-      assert.equal(camera.x, 289);
-      assert.equal(camera.y, 217);
+      assert.equal(camera.position.x, 289);
+      assert.equal(camera.position.y, 217);
       assert(gameStateMock.spaceDust[0].update.called);
     });
   });
@@ -62,15 +63,14 @@ describe('Camera', function() {
 const mockGameState = function(gameWidth, gameHeight, x, y, dustParticle = {update: sinon.spy()}) {
   return {
     playerShip: {
-      getState: function() {
+      getPosition: function() {
         return {
-          position: {
-            x: x,
-            y: y
-          }
+          x: x,
+          y: y
         };
       }
     },
+    centrePoint: new Vector(gameWidth / 2,gameHeight / 2),
     gameWidth: gameWidth,
     gameHeight: gameHeight,
     spaceDust: [dustParticle]

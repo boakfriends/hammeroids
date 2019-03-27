@@ -6,10 +6,10 @@
 *
 **/
 
-import {GameState} from'./game/gamestate';
-import {View} from'./game/view';
+import {GameState} from'./game/gamestate.js';
+import {View} from'./game/view.js';
 import {Settings} from'./settings';
-import {Ship} from'./game/entities/ship';
+import {Ship} from'./game/entities/ship.js';
 import {Sockets} from './game/sockets/sockets.js';
 import {Camera} from './game/camera/camera.js';
 import {App} from './game/app.js';
@@ -18,8 +18,6 @@ document.addEventListener("DOMContentLoaded",function() {
   const settings = new Settings()
   const sockets = new Sockets(settings.baseSocketUrl);
   const gameState = new GameState(sockets);
-  gameState.newPlayerShip();
-  gameState.addListeners(window.addEventListener);
   const camera = new Camera(gameState);
   const view = new View(gameState, camera);
   gameState.newPlayerShip();

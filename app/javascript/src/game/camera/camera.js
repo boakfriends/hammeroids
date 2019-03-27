@@ -1,21 +1,18 @@
-import {Delta} from './delta.js';
+import {Vector} from '../physics/vector.js';
 
 export class Camera {
   constructor(gameState) {
     this.gameState = gameState;
-    this.x = this.gameState.gameWidth / 2;
-    this.y = this.gameState.gameHeight / 2;
+    this.position = new Vector(gameState.centrePoint.x, gameState.centrePoint.y);
   }
 
   update(context) {
-    const shipPosition = this.gameState.playerShip.getState().position;
-    this.delta = new Delta(shipPosition, this);
+    const shipPosition = this.gameState.playerShip.getPosition();
+    this.delta = new Vector(shipPosition.x, shipPosition.y).subtract(this.position).scale(0.1);
     this.updateSpaceDust();
-    this.x += this.delta.x;
-    this.y += this.delta.y;
-    const translateX = this.gameState.gameWidth / 2 - this.x;
-    const translateY = this.gameState.gameHeight / 2 - this.y;
-    context.translate(translateX, translateY);
+    this.position = this.position.add(this.delta);
+    const translateVector = this.gameState.centrePoint.subtract(this.position);
+    context.translate(translateVector.x, translateVector.y);
   }
 
   updateSpaceDust() {
@@ -24,14 +21,8 @@ export class Camera {
 
   getBounds() {
     return [
-      {
-        x: this.x - this.gameState.gameWidth / 2,
-        y: this.y - this.gameState.gameHeight / 2
-      },
-      {
-        x: this.x + this.gameState.gameWidth / 2,
-        y: this.y + this.gameState.gameHeight / 2
-      }
+      this.position.subtract(this.gameState.centrePoint),
+      this.position.add(this.gameState.centrePoint)
     ]
   }
 

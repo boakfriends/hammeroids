@@ -1,25 +1,33 @@
-import {Physics} from '../physics/physics.js'
 import {PathDrawer} from '../drawing/pathdrawer.js';
+import {PhysicsHandler} from '../physics/physicshandler.js';
+import {Vector} from '../physics/vector.js';
 
 export class Slug {
-  constructor(position) {
-    const SLUG_SPEED = 7,
-      xMomentum = Physics.getCosOfDegrees(position.angle + 90),
-      yMomentum = Physics.getCosOfDegrees(position.angle);
-    this.physics = new Physics(1, 3, 1, position.x, position.y, position.angle, xMomentum * SLUG_SPEED, yMomentum * SLUG_SPEED);
-    this.slugCoords = [[0,4],[0,-4]];
+  constructor(position, angle) {
+    if(!(position instanceof Vector)) {
+      position = new Vector(position.x, position.y);
+    }
+    const momentumVector = new Vector(0, -11).rotate(angle, {x:0, y:0});
+    const mass = 0.1;
+    this.physics = new PhysicsHandler(mass, 0, momentumVector, position, angle);
+    this.shape = [new Vector(0,4),new Vector(0,-4)];
+    this._path = this.getPath(this.shape, position, angle);
+  }
+
+  getPath(shape, position, angle) {
+    const path = [];
+    for(let vector of shape) {
+      path.push(vector.rotate(angle, {x:0, y:0}).add(position));
+    }
+    return path;
   }
 
   getDrawer() {
-    const newCoords = [];
-    for(let coord in this.slugCoords) {
-      newCoords.push(this.physics.getTransform(this.slugCoords[coord][0], this.slugCoords[coord][1]));
-    }
     const params = {
       'strokeStyle': 'rgb(255,255,255)',
       'lineWidth': 4
     }
-    return new PathDrawer(newCoords, params);
+    return new PathDrawer(this.path, params);
   }
 
   getDetail() {
@@ -27,7 +35,7 @@ export class Slug {
   }
 
   update(delta) {
-    this.physics.update(delta);
+    this.path = this.physics.update(delta, this.shape);
   }
 
   getState() {
@@ -36,5 +44,13 @@ export class Slug {
 
   setState(state) {
     this.physics.setState(state);
+  }
+
+  get path() {
+    return this._path;
+  }
+
+  set path(path) {
+    this._path = path;
   }
 }

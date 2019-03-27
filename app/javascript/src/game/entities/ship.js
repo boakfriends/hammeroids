@@ -1,28 +1,27 @@
-import {Physics} from '../physics/physics.js'
 import {PathDrawer} from '../drawing/pathdrawer.js';
 import {TextDrawer} from '../drawing/textdrawer.js';
+import {PhysicsHandler} from '../physics/physicshandler.js';
+import {Vector} from '../physics/vector.js';
 
 export class Ship {
-  constructor(x, y) {
+  constructor(x, y, angle) {
     const friction = 0.98,
       speed = 1.2,
       turnRate = 0.2;
-    this.coords = [
-      [0, -10],
-      [7, 8],
-      [0, 2],
-      [-7, 8]
+    this.shape = [
+      new Vector(0, -10),
+      new Vector(7, 8),
+      new Vector(0, 2),
+      new Vector(-7, 8)
     ];
     this.turning;
     this.accelerating = false;
-    this.physics = new Physics(friction, turnRate, speed, x, y);
+    const mass = 10;
+    this.physics = new PhysicsHandler(mass, -0.02, undefined, new Vector(x, y), angle);
+    this.path = this.shape;
   }
 
   getDrawer() {
-    const newCoords = [];
-    for(let coord in this.coords) {
-      newCoords.push(this.physics.getTransform(this.coords[coord][0], this.coords[coord][1]));
-    }
     const params = {
       'shadowColor': "white",
       'shadowOffsetX': 0,
@@ -31,7 +30,7 @@ export class Ship {
       'strokeStyle': 'rgb(255,255,255)',
       'lineWidth': 2
     }
-    return new PathDrawer(newCoords, params);
+    return new PathDrawer(this.path, params);
   }
 
   getDetail() {
@@ -40,7 +39,11 @@ export class Ship {
       'font': "10px Arial",
       'textAlign': "center"
     }
-    return new TextDrawer({'x': this.physics.position.x, 'y': this.physics.position.y, 'text': this.name}, params);
+    return new TextDrawer(this.getPosition(), this.name, params);
+  }
+
+  getPosition() {
+    return this.physics.position;
   }
 
   getState() {
@@ -64,12 +67,14 @@ export class Ship {
   }
 
   update(delta) {
-    if(this.accelerating) {
-      this.physics.accel();
-    }
-    if(this.turning) {
-      this.physics.turn(this.turning);
-    }
-    this.physics.update(delta);
+    this.path = this.physics.update(delta, this.shape);
+  }
+
+  get path() {
+    return this._path;
+  }
+
+  set path(path) {
+    this._path = path;
   }
 }

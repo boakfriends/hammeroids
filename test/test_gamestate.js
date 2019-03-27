@@ -1,5 +1,5 @@
-import {Ship} from '../app/javascript/src/game/entities/ship';
-import {GameState} from '../app/javascript/src/game/gamestate';
+import {Ship} from '../app/javascript/src/game/entities/ship.js';
+import {GameState} from '../app/javascript/src/game/gamestate.js';
 
 const assert = require('assert');
 const sinon = require('sinon');
@@ -41,8 +41,8 @@ describe('GameState', function() {
       gameState.setWidth(width);
 
       // Then
-      assert.equal(gameState.getHeight(), height);
-      assert.equal(gameState.getWidth(), width);
+      assert.equal(gameState.height, height);
+      assert.equal(gameState.width, width);
     })
   });
 
