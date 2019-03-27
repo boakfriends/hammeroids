@@ -1,5 +1,5 @@
 import { PathDrawer } from '../../app/javascript/src/game/drawing/pathdrawer.js';
-import { Vector } from '../../app/javascript/src/game/physics/Vector';
+import { Vector } from '../../app/javascript/src/game/physics/vector.js';
 
 const assert = require('assert');
 const sinon = require('sinon');

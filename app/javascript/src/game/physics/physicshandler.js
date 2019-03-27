@@ -1,4 +1,4 @@
-import {Vector} from './Vector';
+import {Vector} from './vector.js';
 /**
 * A Physics handler. Handles physics for game objects
 **/

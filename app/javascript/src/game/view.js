@@ -1,5 +1,5 @@
 import {TextDrawer} from './drawing/textdrawer.js';
-import {Vector} from './physics/Vector';
+import {Vector} from './physics/vector.js';
 
 export class View {
 

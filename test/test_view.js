@@ -1,4 +1,4 @@
-import {View} from '../app/javascript/src/game/view';
+import {View} from '../app/javascript/src/game/view.js';
 
 const assert = require('assert');
 const sinon = require('sinon');

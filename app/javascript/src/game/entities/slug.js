@@ -1,6 +1,6 @@
 import {PathDrawer} from '../drawing/pathdrawer.js';
-import {PhysicsHandler} from '../physics/PhysicsHandler';
-import {Vector} from '../physics/Vector';
+import {PhysicsHandler} from '../physics/physicshandler.js';
+import {Vector} from '../physics/vector.js';
 
 export class Slug {
   constructor(position, angle) {

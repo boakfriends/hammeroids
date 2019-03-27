@@ -1,5 +1,5 @@
 import {DustParticle} from '../../app/javascript/src/game/entities/dustparticle.js';
-import { Vector } from '../../app/javascript/src/game/physics/Vector';
+import { Vector } from '../../app/javascript/src/game/physics/vector.js';
 
 const assert = require('assert');
 

@@ -4,8 +4,8 @@ import {Slug} from './entities/slug.js';
 import {Sockets} from './sockets/sockets.js';
 import {DustParticle} from './entities/dustparticle.js';
 import {FrameRate} from'./gamestate/framerate.js';
-import {PlayerController} from './controller/PlayerController';
-import {Vector} from './physics/Vector';
+import {PlayerController} from './controller/playercontroller.js';
+import {Vector} from './physics/vector.js';
 
 export class GameState {
 

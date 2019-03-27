@@ -1,5 +1,5 @@
-import {Ship} from '../app/javascript/src/game/entities/ship';
-import {GameState} from '../app/javascript/src/game/gamestate';
+import {Ship} from '../app/javascript/src/game/entities/ship.js';
+import {GameState} from '../app/javascript/src/game/gamestate.js';
 
 const assert = require('assert');
 const sinon = require('sinon');

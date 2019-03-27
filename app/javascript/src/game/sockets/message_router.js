@@ -1,4 +1,4 @@
-import {Lobby} from'../ui/lobby';
+import {Lobby} from'../ui/lobby.js';
 
 const CLASSES = {
   'lobby': Lobby,

@@ -1,5 +1,5 @@
 import { ParticleDrawer } from '../drawing/particledrawer.js';
-import { Vector } from '../physics/Vector';
+import { Vector } from '../physics/vector.js';
 
 export class DustParticle {
   constructor() {

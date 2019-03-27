@@ -1,4 +1,4 @@
-import {Vector} from '../../app/javascript/src/game/physics/vector';
+import {Vector} from '../../app/javascript/src/game/physics/vector.js';
 
 const assert = require('assert');
 const EPSILON = 0.001;

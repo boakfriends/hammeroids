@@ -1,7 +1,7 @@
 import {PathDrawer} from '../drawing/pathdrawer.js';
 import {TextDrawer} from '../drawing/textdrawer.js';
-import {PhysicsHandler} from '../physics/PhysicsHandler';
-import {Vector} from '../physics/Vector';
+import {PhysicsHandler} from '../physics/physicshandler.js';
+import {Vector} from '../physics/vector.js';
 
 export class Ship {
   constructor(x, y, angle) {

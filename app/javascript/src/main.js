@@ -6,10 +6,10 @@
 *
 **/
 
-import {GameState} from'./game/gamestate';
-import {View} from'./game/view';
+import {GameState} from'./game/gamestate.js';
+import {View} from'./game/view.js';
 import {Settings} from'./settings';
-import {Ship} from'./game/entities/ship';
+import {Ship} from'./game/entities/ship.js';
 import {Sockets} from './game/sockets/sockets.js';
 import {Camera} from './game/camera/camera.js';
 import {App} from './game/app.js';
