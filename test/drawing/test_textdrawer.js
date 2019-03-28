@@ -13,7 +13,7 @@ describe('TextDrawer', function() {
         x = 10,
         y = 10,
         textDrawer = new TextDrawer({'x': x, 'y': y}, text, params);
-      const contextSpy = {fillText: sinon.spy()}
+      const contextSpy = {fillText: sinon.spy(), save: sinon.spy(), restore: sinon.spy()}
 
       // When
       textDrawer.draw(contextSpy);

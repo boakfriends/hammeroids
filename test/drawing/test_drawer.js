@@ -12,7 +12,7 @@ describe('Drawer', function() {
         'font': 'bodacious'
       }
       const drawer = new Drawer(params);
-      const contextSpy = {};
+      const contextSpy = {save: sinon.spy(), restore: sinon.spy()};
       
       // When
       drawer.draw(contextSpy);
@@ -26,7 +26,7 @@ describe('Drawer', function() {
       // Given
       const drawer = new Drawer({});
       drawer._draw = sinon.spy();
-      const contextSpy = {};
+      const contextSpy = {save: sinon.spy(), restore: sinon.spy()};
       
       // When
       drawer.draw(contextSpy);
