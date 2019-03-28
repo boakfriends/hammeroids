@@ -30,20 +30,20 @@ export class Sockets {
       const remoteShip = this.networkObjects[data.id];
       remoteShip.setData(data.data);
       remoteShip.setName(data.name);
-    } else if(data.type == 'slug') {
+    } else if(data.type == 'slug' && this.id != data.id) {
       this.networkObjects[JSON.stringify(data.slug)] = new Slug(data.slug.position, data.slug.angle);
     }
   };
 
   fire(slugState) {
     if(this.ws.readyState === 1 && this.id) {
-      this.ws.send(JSON.stringify({'type': 'slug', 'slug': slugState}));
+      this.ws.send(JSON.stringify({'id': this.id, 'type': 'slug', 'slug': slugState}));
     }
   }
   
   updatePlayerShipState(ShipState, name) {
     if(this.ws.readyState === 1 && this.id) {
-      this.ws.send(JSON.stringify({'type': 'update', 'name': name, 'id': this.id, 'data': ShipState}));
+      this.ws.send(JSON.stringify({'id': this.id, 'type': 'update', 'name': name, 'data': ShipState}));
     }
   }
 
