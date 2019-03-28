@@ -1,7 +1,7 @@
 module Hammeroids
   # Represents a player, stores attributes in redis.
   # Class to can retrieve a list of players
-  Player = Struct.new(:name) do
+  class Player
     class << self
       def all
         redis.smembers("players").map { |player_json| JSON.parse(player_json) }
@@ -12,13 +12,19 @@ module Hammeroids
       end
     end
 
+    attr_accessor :id, :name
+
+    def initialize(id: nil, name: "Guest")
+      @id = id
+      @name = name
+    end
+
     def delete
       redis.srem("players", to_json)
     end
 
-    def update(**attributes)
-      @name = attributes[:name]
-      save
+    def save
+      redis.sadd("players", to_json)
     end
 
     private
@@ -27,12 +33,8 @@ module Hammeroids
       @redis ||= Redis.new(url: ENV.fetch("REDIS_URL"))
     end
 
-    def save
-      redis.sadd("players", to_json)
-    end
-
     def to_json
-      JSON.generate(name: @name)
+      JSON.generate(id: @id, name: @name)
     end
   end
 end

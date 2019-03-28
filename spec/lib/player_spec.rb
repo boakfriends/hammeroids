@@ -24,6 +24,47 @@ RSpec.describe Hammeroids::Player do
     end
   end
 
+  describe "attributes" do
+    subject { described_class.new(attributes) }
+
+    let(:attributes) do
+      {
+        id: Faker::Number.between(1,10),
+        name: Faker::TvShows::RickAndMorty.character
+      }
+    end
+
+    describe "#id" do
+      it "is not nil" do
+        expect(subject.id).not_to be_nil
+      end
+    end
+
+    describe "#id=(id)" do
+      let(:id) { Faker::Number.between(1,10) }
+
+      it "sets new id" do
+        subject.id = id
+        expect(subject.id).to eql id
+      end
+    end
+
+    describe "#name" do
+      it "is not nil" do
+        expect(subject.id).not_to be_nil
+      end
+    end
+
+    describe "#name=(name)" do
+      let(:name) { Faker::TvShows::RickAndMorty.character }
+
+      it "sets new name" do
+        subject.name = name
+        expect(subject.name).to eql name
+      end
+    end
+  end
+
   describe "#delete" do
     subject { described_class.new.delete }
 
@@ -41,16 +82,17 @@ RSpec.describe Hammeroids::Player do
     end
   end
 
-  describe "#update(attributes)" do
-    subject { described_class.new.update(attributes) }
+  describe "#save" do
+    subject { described_class.new(attributes).save }
 
     context "attributes" do
       let(:attributes) do
-        { name: name }
+        { id: id, name: name }
       end
 
-      context "name" do
+      context "id and name" do
         let(:name) { Faker::TvShows::RickAndMorty.character }
+        let(:id) { Faker::Number.between(1, 10) }
 
         context "not in  lobby" do
           let(:mock_redis) { instance_double("Redis", sadd: 1) }
@@ -61,7 +103,7 @@ RSpec.describe Hammeroids::Player do
 
           it "adds player JSON to players set, returns number of sets added" do
             expect(subject).to eq 1
-            expect(mock_redis).to have_received(:sadd).with("players", include(name))
+            expect(mock_redis).to have_received(:sadd).with("players", include("{\"id\":#{id},\"name\":\"#{name}\"}"))
           end
         end
       end
