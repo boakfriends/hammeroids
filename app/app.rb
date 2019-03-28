@@ -24,14 +24,15 @@ module Hammeroids
           player = Hammeroids::Player.new
 
           connection.onopen do |handshake|
-            Hammeroids::Channels::Subscription.new(connection, channel).create
+            player.id = Hammeroids::Channels::Subscription.new(connection, channel).create
           end
 
           connection.onmessage do |message|
             # TODO: refactor this once we have a better idea of all the events we'll be dealing with.
             message_h = JSON.parse(message).deep_symbolize_keys
             if message_h[:type] == "player"
-              player.update(message_h[:attributes])
+              player.name = message_h[:attributes][:name]
+              player.save
               Hammeroids::Channels::Lobby.new(channel).broadcast
             end
             channel.push(message)

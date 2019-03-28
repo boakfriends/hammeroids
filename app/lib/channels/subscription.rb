@@ -10,7 +10,7 @@ module Hammeroids
 
       def create
         @connection.send(json)
-        @connection
+        id
       end
 
       private
