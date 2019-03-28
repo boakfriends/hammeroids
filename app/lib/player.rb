@@ -1,38 +1,38 @@
 module Hammeroids
-  # Represents a connection and subscription to the game channel.
-  # Adds the Player to the lobby(redis) list.
-  class Player
-    attr_accessor :name
+  # Represents a player, stores attributes in redis.
+  # Class to can retrieve a list of players
+  Player = Struct.new(:name) do
+    class << self
+      def all
+        redis.smembers("players").map { |player_json| JSON.parse(player_json) }
+      end
 
-    def initialize(connection, channel, name: "Guest")
-      @connection = connection
-      @channel = channel
-      @name = name
+      def redis
+        @redis ||= Redis.new(url: ENV.fetch("REDIS_URL"))
+      end
     end
 
-    def join
-      Hammeroids::Lobby.new.add(to_json)
+    def delete
+      redis.srem("players", to_json)
     end
 
-    def leave
-      Hammeroids::Lobby.new.remove(to_json)
-    end
-
-    def subscription_id
-      @subscription_id ||= Hammeroids::Players::Subscription.new(@connection, @channel).create
+    def update(**attributes)
+      @name = attributes[:name]
+      save
     end
 
     private
 
-    def to_h
-      {
-        id: subscription_id,
-        name: @name
-      }
+    def redis
+      @redis ||= Redis.new(url: ENV.fetch("REDIS_URL"))
+    end
+
+    def save
+      redis.sadd("players", to_json)
     end
 
     def to_json
-      to_h.to_json
+      JSON.generate(name: @name)
     end
   end
 end
