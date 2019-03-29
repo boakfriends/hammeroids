@@ -16,7 +16,7 @@ module Hammeroids
       private
 
       def attributes
-        { type: "welcome", id: id }
+        { type: "welcome", payload: {id: id }}
       end
 
       def id
