@@ -17,7 +17,7 @@ describe('PathDrawer', function() {
         new Vector(0,0)
       ];
       const pathDrawer = new PathDrawer(path, params);
-      const contextSpy = {beginPath: sinon.spy(), moveTo: sinon.spy(), lineTo: sinon.spy(), closePath: sinon.spy(), stroke: sinon.spy()}
+      const contextSpy = {beginPath: sinon.spy(), moveTo: sinon.spy(), lineTo: sinon.spy(), closePath: sinon.spy(), stroke: sinon.spy(), save: sinon.spy(), restore: sinon.spy()}
       
       // When
       pathDrawer.draw(contextSpy);
