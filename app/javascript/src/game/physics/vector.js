@@ -44,21 +44,17 @@ export class Vector {
     return new Vector(this.x * scale, this.y * scale);
   }
 
-  wrapBounds(bounds) {
-    let xTemp,yTemp;
-    xTemp = this.x < bounds[0].x ? bounds[1].x : this.x > bounds[1].x ? bounds[0].x : this.x;
-    yTemp = this.y > bounds[1].y ? bounds[0].y : this.y < bounds[0].y ? bounds[1].y : this.y;
-    return (xTemp == this.x && yTemp == this.y) ? this : new Vector(xTemp, yTemp);
-  }
-
   toString() {
-    return `{x: ${this.x}, y: ${this.y}}`;
+    return `{"x": ${this.x}, "y": ${this.y}}`;
   }
 
-  static inBounds(bounds) {
-    const xTemp = Math.random() * (bounds[1].x - bounds[0].x) + bounds[0].x;
-    const yTemp = Math.random() * (bounds[1].y - bounds[0].y) + bounds[0].y;
-    return new Vector(xTemp, yTemp);
+  angle() {
+    return Math.atan2(this.y, this.x);
+  }
+
+  static fromString(string) {
+    const coords = JSON.parse(string);
+    return new Vector(coords.x, coords.y);
   }
 
 }

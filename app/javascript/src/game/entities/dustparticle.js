@@ -11,10 +11,10 @@ export class DustParticle {
 
   update(bounds, delta) {
     if(!this.position) {
-      this.position = Vector.inBounds(bounds);
+      this.position = bounds.vectorWithinBounds();
     }
     this.position = this.position.subtract(delta.scale(this.z - 1));
-    this.position = this.position.wrapBounds(bounds);
+    this.position = bounds.wrapBounds(this.position);
   }
 
   getDrawer = () => {

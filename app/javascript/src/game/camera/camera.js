@@ -1,4 +1,5 @@
 import {Vector} from '../physics/vector.js';
+import {Bounds} from '../physics/bounds.js';
 
 export class Camera {
   constructor(gameState) {
@@ -20,10 +21,10 @@ export class Camera {
   }
 
   getBounds() {
-    return [
+    return new Bounds(
       this.position.subtract(this.gameState.centrePoint),
       this.position.add(this.gameState.centrePoint)
-    ]
+    )
   }
 
 }

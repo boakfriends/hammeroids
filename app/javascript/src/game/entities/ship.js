@@ -77,4 +77,8 @@ export class Ship {
   set path(path) {
     this._path = path;
   }
+
+  get velocity() {
+    return this.physics.velocity;
+  }
 }

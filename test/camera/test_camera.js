@@ -51,10 +51,10 @@ describe('Camera', function() {
       camera.update(contextMock);
 
       // Then
-      assert.equal(camera.getBounds()[0].x, -31);
-      assert.equal(camera.getBounds()[0].y, -23);
-      assert.equal(camera.getBounds()[1].x, 609);
-      assert.equal(camera.getBounds()[1].y, 457);
+      assert.equal(camera.getBounds().topLeft.x, -31);
+      assert.equal(camera.getBounds().topLeft.y, -23);
+      assert.equal(camera.getBounds().bottomRight.x, 609);
+      assert.equal(camera.getBounds().bottomRight.y, 457);
     });
   });
 });
