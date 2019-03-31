@@ -19,10 +19,10 @@ describe('DustParticle', function() {
 
       // Then
       const errorMessage = `Dust position was ${dust.position.toString()}`;
-      assert(dust.position.x > 0, errorMessage);
-      assert(dust.position.x < 140, errorMessage);
-      assert(dust.position.y > 0, errorMessage);
-      assert(dust.position.y < 140, errorMessage);
+      assert(dust.position.x >= 0, errorMessage);
+      assert(dust.position.x <= 140, errorMessage);
+      assert(dust.position.y >= 0, errorMessage);
+      assert(dust.position.y <= 140, errorMessage);
     });
   });
 });
