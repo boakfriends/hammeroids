@@ -41,7 +41,7 @@ describe('Lobby', function() {
 
     it('Should do nothing if the element id returns an element that doesn\'t exist', function() {
       // Given
-      const lobby = new Lobby(payload, 'test');
+      const lobby = new Lobby(payload, {}, 'test');
 
       // When
       assert(!global.document.getElementById('lobby').firstChild);

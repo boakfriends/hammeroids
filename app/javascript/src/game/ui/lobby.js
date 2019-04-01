@@ -1,6 +1,7 @@
 /*jshint esversion: 6 */
 export class Lobby {
-  constructor({players=[]}, elementId="lobby") {
+  constructor({players=[]}, socket, elementId="lobby") {
+    this.socket = socket;
     this.players = players;
     this.elementId = elementId;
   }

@@ -1,7 +1,4 @@
 import {MessageRouter} from './message_router.js';
-import {PlayerName} from './messages/player_name.js';
-import {Ship} from '../entities/ship.js';
-import {Slug} from '../entities/slug.js';
 
 export class Sockets {
   constructor(uri, socket) {
@@ -16,34 +13,32 @@ export class Sockets {
   }
 
   onMessage = (event) => {
-    const router = new MessageRouter(event)
+    const router = new MessageRouter(event, this)
     router.action();
-    const data = JSON.parse(event.data);
-    if(data.type == 'welcome') {
-      this.id = data.id;
-      const player_name = new PlayerName(this.ws);
-      player_name.update();
-    } else if(data.type == 'update' && this.id != data.id) {
-      if(!this.networkObjects[data.id]) {
-        this.networkObjects[data.id] = new Ship(data.data.position.x, data.data.position.y);
-      }
-      const remoteShip = this.networkObjects[data.id];
-      remoteShip.setData(data.data);
-      remoteShip.setName(data.name);
-    } else if(data.type == 'slug' && this.id != data.id) {
-      this.networkObjects[JSON.stringify(data.slug)] = new Slug(data.slug.position, data.slug.angle);
-    }
   };
 
   fire(slugState) {
     if(this.ws.readyState === 1 && this.id) {
-      this.ws.send(JSON.stringify({'id': this.id, 'type': 'slug', 'slug': slugState}));
+      this.ws.send(JSON.stringify({
+        'type': 'munitions',
+        'payload': {
+          'id': this.id,
+          'state': slugState
+        }
+      }));
     }
   }
   
-  updatePlayerShipState(ShipState, name) {
+  updatePlayerShipState(shipState, name) {
     if(this.ws.readyState === 1 && this.id) {
-      this.ws.send(JSON.stringify({'id': this.id, 'type': 'update', 'name': name, 'data': ShipState}));
+      this.ws.send(JSON.stringify({
+        'type': 'update', 
+        'payload': {
+          'name': name,
+          'id': this.id,
+          'state': shipState
+        }
+      }));
     }
   }
 

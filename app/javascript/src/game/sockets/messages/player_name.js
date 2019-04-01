@@ -1,10 +1,12 @@
 export class PlayerName {
-  constructor(ws) {
-    this.ws = ws;
+  constructor(payload, socket) {
+    this.payload = payload;
+    this.socket = socket;
   }
 
   update() {
-    this.ws.send(this.messageString)
+    this.socket.id = this.payload.id;
+    this.socket.ws.send(this.messageString)
   }
 
   get messageString() {
