@@ -20,7 +20,7 @@ module Hammeroids
       end
 
       def id
-        @channel.subscribe { |message| @connection.send(message) }
+        @id ||= @channel.subscribe { |message| @connection.send(message) }
       end
 
       def json
