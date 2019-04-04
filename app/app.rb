@@ -20,7 +20,7 @@ module Hammeroids
       EventMachine.run do
 
         channel = EM::Channel.new
-        EventMachine::WebSocket.start(host: @socket_host, port: @socket_port, secure: @socket_secure) do |connection|
+        EventMachine::WebSocket.start(host: @socket_host, secure: @socket_secure) do |connection|
           player = Hammeroids::Player.new
 
           connection.onopen do |handshake|
