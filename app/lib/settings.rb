@@ -3,7 +3,7 @@ module Hammeroids
   class Settings
     class << self
       def base_socket_url
-        @base_socket_url ||= "#{socket_scheme}#{base_host}:#{ENV['PORT']}/game"
+        @base_socket_url ||= "#{socket_scheme}#{base_host}/game"
       end
 
       def base_web_url
