@@ -30,6 +30,7 @@ module Hammeroids
           connection.onmessage do |message|
             # TODO: refactor this once we have a better idea of all the events we'll be dealing with.
             message_h = JSON.parse(message).deep_symbolize_keys
+            puts message_h.inspect
             if message_h[:type] == "player"
               player.update(message_h[:attributes])
               Hammeroids::Channels::Lobby.new(channel).broadcast
