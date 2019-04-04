@@ -5,4 +5,4 @@ if ENV["RACK_ENV"] == "development"
   puts "Started Webpack dev server #{pid}"
 end
 
-Hammeroids::Launcher.new(socket_secure: Sinatra::Base.production?, web_port: ENV["PORT"]).run
+Hammeroids::Launcher.new(socket_secure: Sinatra::Base.production?, web_port: ENV["PORT"], socket_port: ENV["PORT"]).run
