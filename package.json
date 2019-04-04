@@ -10,7 +10,8 @@
   "scripts": {
     "start:dev": "webpack-dev-server",
     "test": "nyc --reporter=html mocha --recursive --require @babel/register",
-    "test:creator": "mocha -g 'Creator' --recursive --require @babel/register"
+    "test:creator": "mocha -g 'Creator' --recursive --require @babel/register",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
