@@ -2,12 +2,14 @@ import {Lobby} from '../ui/lobby.js';
 import {Update} from './messages/update.js';
 import {Munitions} from './messages/munitions.js';
 import {PlayerName} from './messages/player_name.js';
+import {Remove} from './messages/remove.js';
 
 const CLASSES = {
   'lobby': Lobby,
   'update': Update,
   'munitions': Munitions,
-  'welcome': PlayerName
+  'welcome': PlayerName,
+  'remove': Remove
 };
 
 export class MessageRouter {

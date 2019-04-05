@@ -39,6 +39,7 @@ module Hammeroids
           end
 
           connection.onclose do
+            Hammeroids::Channels::Remove.new(channel, player.id).broadcast
             player.delete
             Hammeroids::Channels::Lobby.new(channel).broadcast
           end
