@@ -7,8 +7,8 @@ export class Munitions {
   }
 
   update() {
-    if(this.payload.id != this.socket.id){
-        this.socket.networkObjects[JSON.stringify(this.payload)] = new Slug(this.payload.state.position, this.payload.state.angle);
+    if(this.payload.id != this.socket.id) {
+      this.socket.networkObjects[JSON.stringify(this.payload)] = new Slug(this.payload.state.position, this.payload.state.angle, this.payload.id);
     }
   }
 }

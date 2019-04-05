@@ -6,6 +6,7 @@ import {DustParticle} from './entities/dustparticle.js';
 import {FrameRate} from'./gamestate/framerate.js';
 import {PlayerController} from './controller/playercontroller.js';
 import {Vector} from './physics/vector.js';
+import {Collision} from './gamestate/collision/collision.js';
 
 export class GameState {
 
@@ -45,8 +46,9 @@ export class GameState {
   }
 
   newPlayerShip() {
-    this.playerShip = new Ship(this.gameWidth / 2, this.gameHeight / 2);
+    this.playerShip = new Ship(Math.random() * 1000, Math.random() * 1000);
     this.playerShip.setName(this.name);
+    this.addObject(this.playerShip);
   };
 
   setHeight(height) {
@@ -63,12 +65,18 @@ export class GameState {
     this.getObjects().forEach((object) => object.update(delta));
     this.updateFiring(timestamp);
     this.updateNetworkState();
+    this.checkCollision();
+    this.removeDeadObjects();
   };
 
+  removeDeadObjects() {
+    this.removeObjects(obj => obj.dead);
+  }
+
   updateFiring(timestamp) {
-    if(this.firing && timestamp - this.lastFireTime > this.rechargeTime) {
+    if(this.firing && timestamp - this.lastFireTime > this.rechargeTime && !this.playerShip.dead) {
       const shipState = this.playerShip.getState().position;
-      const slug = new Slug(shipState, this.playerShip.physics.angle);
+      const slug = Slug.fromPlayerShip(shipState, this.playerShip.physics.angle, this.sockets.id);
       this.addObject(slug);
       this.sockets.fire(slug.getState());
       this.lastFireTime = timestamp;
@@ -86,9 +94,6 @@ export class GameState {
   getObjects() {
     const gameObjects = [];
     this.objects.forEach((obj) => gameObjects.push(obj));
-    if(this.playerShip) {
-      gameObjects.push(this.playerShip);
-    }
     this.networkObjects.forEach((obj) => gameObjects.push(obj));
     return gameObjects;
   };
@@ -98,16 +103,23 @@ export class GameState {
   };
 
   removeObjects(predicate) {
-    this.objects = this.objects.filter(function(obj) {return !predicate(obj)});
+    this.objects = this.objects.filter(obj => !predicate(obj));
   };
 
   updateNetworkState() {
-    this.sockets.updatePlayerShipState(this.playerShip.getState(), this.name);
+    if(!this.playerShip.dead) {
+      this.sockets.updatePlayerShipState(this.playerShip, this.name);
+    }
     this.updateNetworkObjects();
   }
 
   updateNetworkObjects() {
     this.networkObjects = this.sockets.getNetworkObjects();
+  }
+
+  checkCollision() {
+    const collision = new Collision(this.getObjects());
+    collision.doCollision(this.objects);
   }
 
   showDetail() {

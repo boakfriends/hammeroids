@@ -9,14 +9,15 @@ module Hammeroids
       end
 
       def create
+        @id = id
         @connection.send(json)
-        id
+        @id
       end
 
       private
 
       def attributes
-        { type: "welcome", payload: {id: id }}
+        { type: "welcome", payload: {id: @id }}
       end
 
       def id

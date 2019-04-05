@@ -29,8 +29,10 @@ export class Sockets {
     }
   }
   
-  updatePlayerShipState(shipState, name) {
+  updatePlayerShipState(ship, name) {
     if(this.ws.readyState === 1 && this.id) {
+      ship.id = this.id;
+      const shipState = ship.getState();
       this.ws.send(JSON.stringify({
         'type': 'update', 
         'payload': {
@@ -45,7 +47,9 @@ export class Sockets {
   getNetworkObjects() {
     const objArr = [];
     for(let id in this.networkObjects) {
-      objArr.push(this.networkObjects[id]);
+      if(!this.networkObjects[id].dead) {
+        objArr.push(this.networkObjects[id]);
+      }
     }
     return objArr;
   }

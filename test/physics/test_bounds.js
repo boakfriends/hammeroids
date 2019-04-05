@@ -85,4 +85,25 @@ describe('Bounds', function() {
       assert.equal(testVector.y, 2.5);
     });
   })
+
+  describe('#constructor', function() {
+    it('Should contruct a bounding box which encapsulates the given path', function() {
+      // Given
+      const path = [
+        new Vector(-10, -10),
+        new Vector(-11,0),
+        new Vector(-5, 0),
+        new Vector(0, 0),
+        new Vector(5,5)
+      ];
+      // When
+      const box = Bounds.withPath(path);
+
+      // Then
+      assert.equal(box.topLeft.x, -11);
+      assert.equal(box.topLeft.y, -10);
+      assert.equal(box.bottomRight.x, 5);
+      assert.equal(box.bottomRight.y, 5);
+    });
+  });
 })

@@ -18,8 +18,8 @@ export class DustParticle {
   }
 
   getDrawer = () => {
-    return new ParticleDrawer(this, [
-      {'key': 'fillStyle', 'value': 'rgba(226,219,226,' + this.opacity +')'}
-    ]);
+    return new ParticleDrawer(this, {
+      fillStyle: 'rgba(226,219,226,' + this.opacity +')'}
+    );
   }
 }
