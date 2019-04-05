@@ -206,41 +206,16 @@ describe('Vector', function() {
     });
   });
 
-  describe('#wrapBounds', function() {
-    it('Should return a vector within the given bounds, by "wrapping" from one edge to another', function() {
+  describe('#angle', function() {
+    it('Should return the angle of the vector', function() {
       // Given
-      let vector = new Vector(5, 5);
-      const bounds = [
-        new Vector(10, 10),
-        new Vector(30, 30)
-      ];
-      
-      // When
-      vector = vector.wrapBounds(bounds);
+      const vector = new Vector(5, 5);
+
+      // When 
+      const angle = vector.angle();
 
       // Then
-      assert.equal(vector.x, 30);
-      assert.equal(vector.y, 30);
-    });
-  });
-
-  describe('#inBounds', function() {
-    it('Should return a new vector within the given bounds', function() {
-      // Given
-      const bounds = [
-        new Vector(10, 10),
-        new Vector(30, 30)
-      ];
-      
-      // When
-      const vector = Vector.inBounds(bounds);
-
-      // Then
-      assert(vector.x > bounds[0].x);
-      assert(vector.y > bounds[0].y);
-      assert(vector.x < bounds[1].x);
-      assert(vector.y < bounds[1].y);
-
+      assert.equal(angle * 180 / Math.PI, 45);
     });
   })
 });

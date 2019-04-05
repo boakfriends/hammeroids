@@ -1,5 +1,5 @@
-import {TextDrawer} from './drawing/textdrawer.js';
-import {Vector} from './physics/vector.js';
+import {GameUi} from './ui/gameui.js';
+
 
 export class View {
 
@@ -28,20 +28,6 @@ export class View {
     this.canvasElement.height = this.gameState.height;
   }
 
-  showFrameRate(framerate) {
-    const params = {
-      fillStyle: 'white',
-      font: "10px Arial",
-      textAlign: "left"
-    };
-    const drawer = new TextDrawer(
-      new Vector(20, 10).add(this.camera.getBounds()[0]),
-      `Framerate: ${framerate}`,
-      params
-    );
-    drawer.draw(this.context);
-  }
-
   /*
   * Calls to this method update the rendering of the game.
   * gameState provides the state to render
@@ -53,9 +39,10 @@ export class View {
     this.camera.update(this.context);
     this.updateObjectsWithFunctions(this.gameState.spaceDust, (object) => object.getDrawer().draw(this.context));
     this.updateObjectsWithFunctions(this.gameState.getObjects(),(object) => object.getDrawer().draw(this.context));
+    const gameUi = new GameUi(this.gameState, this.camera);
+    gameUi.draw(this.context);
     if(this.gameState.showDetail()) {
-      this.showFrameRate(Math.round(this.gameState.frameRate, 2));
-      this.updateObjectsWithFunctions(this.gameState.getObjects(), (object) => object.getDetail().draw(this.context));
+      gameUi.drawDetails(this.context);
     }
   }
 }

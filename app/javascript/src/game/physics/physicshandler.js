@@ -94,4 +94,8 @@ export class PhysicsHandler {
     this.angle = state.angle;
   }
 
+  get velocity() {
+    return Math.sqrt(this.momentumVector.x * this.momentumVector.x + this.momentumVector.y * this.momentumVector.y);
+  }
+
 }

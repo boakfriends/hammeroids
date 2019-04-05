@@ -1,5 +1,6 @@
 import {DustParticle} from '../../app/javascript/src/game/entities/dustparticle.js';
 import { Vector } from '../../app/javascript/src/game/physics/vector.js';
+import { Bounds } from '../../app/javascript/src/game/physics/bounds.js';
 
 const assert = require('assert');
 
@@ -8,10 +9,10 @@ describe('DustParticle', function() {
     it('Should update the position of the dustparticle', function() {
       // Given
       const delta = new Vector(10, 10),
-        bounds = [
+        bounds = new Bounds(
           new Vector(0, 0),
           new Vector(140, 140)
-        ];
+        );
       const dust = new DustParticle();
 
       // When
