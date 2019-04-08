@@ -17,8 +17,8 @@ export class Ship {
     ];
     this.turning;
     this.accelerating = false;
-    const mass = 10;
-    this.physics = new PhysicsHandler(mass, -0.02, undefined, new Vector(x, y), angle);
+    this.mass = 10;
+    this.physics = new PhysicsHandler(this.mass, -0.02, undefined, new Vector(x, y), angle);
     this.path = this.shape;
     this.health = 100;
     this.id = id;

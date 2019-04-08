@@ -1,4 +1,6 @@
 import {Interval} from './interval.js'
+import {ShipCollision} from './shipcollision.js';
+import {Ship} from '../../entities/ship.js';
 
 let showCollisions = true;
 
@@ -26,8 +28,12 @@ function decideCollision(objects) {
   for(let obj of objects) {
     for(let other of objects) {
       if(obj.parentId != other.parentId) {
-        obj.colliding = true;
-        other.colliding = true;
+        if(obj instanceof Ship && other instanceof Ship) {
+          new ShipCollision().doCollision(obj, other);
+        } else {
+          obj.colliding = true;
+          other.colliding = true;
+        }
       }
     }
   }

@@ -52,6 +52,14 @@ export class Vector {
     return Math.atan2(this.y, this.x);
   }
 
+  velocityLoa(angle) {
+    return this.x * Math.cos(angle) + this.y * Math.sin(angle);
+  }
+
+  velocityNormal(angle) {
+    return -Math.sin(angle) * this.x + this.y * Math.cos(angle);
+  }
+
   static fromString(string) {
     const coords = JSON.parse(string);
     return new Vector(coords.x, coords.y);

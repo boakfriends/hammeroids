@@ -218,4 +218,30 @@ describe('Vector', function() {
       assert.equal(angle * 180 / Math.PI, 45);
     });
   })
+
+  describe('#velocityLoa', function() {
+    it('Should calculate the velocity along the line of action, given that this vector represents velocity and the angle given is the line of action', function() {
+      // Given
+      const vector = new Vector(8, 0);
+      
+      // When
+      const vLoa = vector.velocityLoa(30 * Math.PI / 180);
+
+      // Then
+      assert.equal(vLoa.toFixed(2), 6.93);
+    });
+  })
+
+  describe('#velocityNormal', function() {
+    it('Should calculate the velocity normal to the line of action, given that this vector represents velocity and the angle given is the line of action', function() {
+      // Given
+      const vector = new Vector(8, 0);
+      
+      // When
+      const vLoa = vector.velocityNormal(30 * Math.PI / 180);
+
+      // Then
+      assert.equal(vLoa.toFixed(2), -4);
+    });
+  });
 });
