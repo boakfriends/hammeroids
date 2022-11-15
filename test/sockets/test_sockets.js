@@ -24,7 +24,7 @@ describe('Sockets', function() {
       socket.id = 1
 
       // When
-      socket.updatePlayerShipState({});
+      socket.updatePlayerShipState({getState: sinon.spy()});
 
       // Then
       assert(socket.ws.send.called);

@@ -9,7 +9,7 @@ export class Update {
   update() {
     if(this.socket.id != this.payload.id) {
       if(!this.socket.networkObjects[this.payload.id]) {
-        this.socket.networkObjects[this.payload.id] = new Ship(this.payload.state.position.x, this.payload.state.position.y);
+        this.socket.networkObjects[this.payload.id] = new Ship(this.payload.state.position.x, this.payload.state.position.y, this.payload.id);
       }
       const remoteShip = this.socket.networkObjects[this.payload.id];
       remoteShip.setData(this.payload.state);

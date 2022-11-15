@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded",function() {
   const gameState = new GameState(sockets);
   const camera = new Camera(gameState);
   const view = new View(gameState, camera);
-  gameState.newPlayerShip();
+  gameState.newPlayerShip(sockets.id);
   gameState.addListeners(window.addEventListener);
   const app = new App(gameState, view);
   app.run();
